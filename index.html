@@ -35,8 +35,6 @@ body {
   line-height: 1.6;
 }
 
-body.modal-open { overflow: hidden; }
-
 /* ============ HEADER / NAV ============ */
 header {
   position: fixed;
@@ -51,7 +49,9 @@ header {
   transition: var(--transition-smooth);
 }
 
-header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
+header.scrolled {
+  box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+}
 
 .nav-container {
   max-width: 1400px;
@@ -83,20 +83,17 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   border-radius: 12px;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  font-size: 1.4rem;
   box-shadow: 0 6px 20px rgba(255,71,87,0.4);
   animation: pulse 3s infinite;
-  flex-shrink: 0;
 }
-
-.logo-icon img { width: 100%; height: 100%; object-fit: cover; }
-.logo-icon span { color: white; font-size: 1.3rem; font-weight: 900; }
 
 @keyframes pulse {
   0%, 100% { box-shadow: 0 6px 20px rgba(255,71,87,0.4); }
   50% { box-shadow: 0 6px 30px rgba(255,71,87,0.7); }
 }
 
+/* ---- INNOVATIVE NAVIGATION ---- */
 .nav-links {
   display: flex;
   align-items: center;
@@ -105,6 +102,7 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   background: rgba(0,0,0,0.03);
   padding: 0.4rem;
   border-radius: 50px;
+  position: relative;
 }
 
 .nav-links li a {
@@ -118,15 +116,21 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   font-size: 0.92rem;
   border-radius: 50px;
   transition: var(--transition-smooth);
+  position: relative;
+  z-index: 2;
 }
 
-.nav-links li a:hover { color: var(--primary); }
+.nav-links li a:hover {
+  color: var(--primary);
+}
 
 .nav-links li a.active {
   color: white;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   box-shadow: 0 4px 15px rgba(255,71,87,0.4);
 }
+
+.nav-links li a .nav-icon { font-size: 1.1rem; }
 
 .nav-actions {
   display: flex;
@@ -165,7 +169,6 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   display: grid;
   place-items: center;
   border: 2px solid white;
-  transition: var(--transition);
 }
 
 .order-btn {
@@ -187,6 +190,7 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   box-shadow: 0 12px 30px rgba(255,71,87,0.5);
 }
 
+/* Mobile menu btn */
 .mobile-menu-btn {
   display: none;
   width: 48px;
@@ -199,124 +203,81 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   cursor: pointer;
 }
 
-/* ============ HERO ============ */
+/* ============ HERO (FULL IMAGE VERSION) ============ */
 .hero {
   position: relative;
-  width: 100%;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 140px 2rem 80px;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  padding: 0;
-  background: var(--light);
+  background: var(--darker);
 }
 
+/* لایه عکس پس‌زمینه فول */
 .hero-bg {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  overflow: hidden;
-  will-change: opacity, transform;
-  transition: opacity 0.1s linear, transform 0.1s linear;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,0.4) 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,0.4) 85%, transparent 100%);
+  background-image: url('https://uploadkon.ir/uploads/d35d29_26Rustic-Burger-and-Sausage-Feast.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  will-change: transform, opacity, filter;
+  transition: none;
 }
 
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-.hero-bg-fallback {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #ff6b6b, #ffa502, #ff4757);
-  background-size: 200% 200%;
-  animation: gradientShift 10s ease infinite;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
+/* لایه تاریک برای خوانایی متن */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  background: 
-    linear-gradient(to bottom, 
-      rgba(0,0,0,0.55) 0%, 
-      rgba(0,0,0,0.35) 40%, 
-      rgba(0,0,0,0.55) 70%, 
-      rgba(26,26,46,0.9) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, rgba(0,0,0,0.7) 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 70%, rgba(0,0,0,0.7) 85%, transparent 100%);
-  pointer-events: none;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, 
-    rgba(248,249,250,0) 0%, 
-    rgba(248,249,250,0.4) 40%, 
-    rgba(248,249,250,0.85) 70%, 
-    var(--light) 100%);
-  z-index: 4;
+  background: linear-gradient(180deg, rgba(15,15,26,0.55) 0%, rgba(15,15,26,0.75) 60%, rgba(15,15,26,0.95) 100%);
+  z-index: 1;
   pointer-events: none;
 }
 
 .hero-content {
+  max-width: 1200px;
+  width: 100%;
   position: relative;
   z-index: 3;
-  max-width: 900px;
-  text-align: center;
-  padding: 140px 2rem 140px;
-  color: white;
-  animation: heroFadeIn 1.2s ease;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  align-items: center;
 }
 
-@keyframes heroFadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+.hero-text {
+  color: white;
+  animation: slideRight 1s ease;
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.4rem;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: white;
+  padding: 0.5rem 1.2rem;
+  background: rgba(255,71,87,0.2);
+  color: #ffb3ba;
   border-radius: 50px;
   font-weight: 700;
   font-size: 0.85rem;
-  margin-bottom: 1.8rem;
-  border: 1px solid rgba(255,255,255,0.3);
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255,71,87,0.4);
+  backdrop-filter: blur(10px);
 }
 
 .hero-badge .dot {
   width: 8px;
   height: 8px;
-  background: #2ed573;
+  background: var(--primary);
   border-radius: 50%;
   animation: blink 1.5s infinite;
-  box-shadow: 0 0 10px #2ed573;
 }
 
 @keyframes blink {
@@ -325,39 +286,37 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
 }
 
 .hero h1 {
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-size: clamp(2.2rem, 5vw, 4rem);
   font-weight: 900;
-  line-height: 1.25;
+  line-height: 1.3;
   margin-bottom: 1.5rem;
-  text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  color: white;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
 
 .hero h1 .gradient-text {
-  background: linear-gradient(135deg, #ffd93d, #ffa502);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 20px rgba(255,165,2,0.5));
 }
 
 .hero p {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: rgba(255,255,255,0.92);
-  margin: 0 auto 2.5rem;
-  max-width: 650px;
-  text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 2rem;
+  max-width: 500px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
 .hero-buttons {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 3.5rem;
 }
 
 .btn-primary, .btn-secondary {
-  padding: 1rem 2.2rem;
+  padding: 1rem 2rem;
   border-radius: 50px;
   font-weight: 700;
   font-family: inherit;
@@ -373,60 +332,83 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  box-shadow: 0 10px 30px rgba(255,71,87,0.5);
+  box-shadow: 0 10px 30px rgba(255,71,87,0.4);
 }
 
 .btn-primary:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 40px rgba(255,71,87,0.7);
+  box-shadow: 0 15px 40px rgba(255,71,87,0.6);
 }
 
 .btn-secondary {
-  background: rgba(255,255,255,0.95);
+  background: white;
   color: var(--dark);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow);
 }
 
 .btn-secondary:hover {
   transform: translateY(-4px);
-  background: white;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  box-shadow: var(--shadow-hover);
 }
 
 .hero-stats {
   display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.stat-item {
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 18px;
-  padding: 1.2rem 1.8rem;
-  min-width: 130px;
-  transition: var(--transition);
-}
-
-.stat-item:hover {
-  background: rgba(255,255,255,0.2);
-  transform: translateY(-5px);
+  gap: 2.5rem;
+  margin-top: 3rem;
 }
 
 .stat-item h3 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 900;
-  background: linear-gradient(135deg, #ffd93d, #ffa502);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 0.2rem;
 }
 
-.stat-item p { font-size: 0.85rem; color: rgba(255,255,255,0.85); }
+.stat-item p { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+
+/* کارت شیشه‌ای سمت راست هیرو */
+.hero-glass-card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 28px;
+  padding: 2rem;
+  color: white;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  animation: slideLeft 1s ease;
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-glass-card .glass-icon {
+  width: 64px; height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: grid; place-items: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 30px rgba(255,71,87,0.4);
+}
+.hero-glass-card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.6rem; }
+.hero-glass-card p { font-size: 0.92rem; color: rgba(255,255,255,0.8); margin-bottom: 1.2rem; }
+.hero-glass-card .glass-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.hero-glass-card .glass-list li {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.9rem; color: rgba(255,255,255,0.9);
+}
+.hero-glass-card .glass-list li .chk {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(46,213,115,0.25);
+  color: #2ed573;
+  display: grid; place-items: center;
+  font-size: 0.8rem; font-weight: 900;
+}
 
 /* ============ SECTIONS ============ */
 .section {
@@ -482,10 +464,16 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   color: var(--gray);
   cursor: pointer;
   transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-.filter-btn:hover { color: var(--primary); transform: translateY(-2px); }
+.filter-btn:hover {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
 
 .filter-btn.active {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -493,12 +481,12 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   box-shadow: 0 8px 25px rgba(255,71,87,0.4);
 }
 
-/* =============================================================
-   ✅ بخش محصولات - مثل فایل اصلی: یک باکس واحد
-   ============================================================= */
+.filter-btn .emoji { font-size: 1.2rem; }
+
+/* ============ PRODUCTS GRID ============ */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);  /* ✅ دو محصول در هر ردیف */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }
 
@@ -512,8 +500,6 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   opacity: 0;
   transform: translateY(30px);
   animation: fadeUp 0.6s ease forwards;
-  display: flex;
-  flex-direction: column;
 }
 
 @keyframes fadeUp {
@@ -525,16 +511,14 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   box-shadow: var(--shadow-hover);
 }
 
-/* عکس داخل باکس */
 .product-image {
-  height: 260px;
+  height: 220px;
   background: linear-gradient(135deg, #fff5f6, #ffeedd);
   display: grid;
   place-items: center;
   font-size: 6rem;
   position: relative;
   overflow: hidden;
-  flex-shrink: 0;
 }
 
 .product-image img {
@@ -542,7 +526,7 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.5s ease;
 }
 
 .product-card:hover .product-image img {
@@ -555,27 +539,10 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   inset: 0;
   background: radial-gradient(circle at 50% 50%, rgba(255,71,87,0.1), transparent 70%);
   transition: var(--transition-smooth);
+  z-index: 1;
   pointer-events: none;
 }
 
-.product-card:hover .product-image::before {
-  transform: scale(1.5);
-}
-
-.product-image .img-fallback {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, #fff5f6, #ffeedd);
-  color: var(--primary);
-  font-size: 0.95rem;
-  font-weight: 700;
-  text-align: center;
-  padding: 1rem;
-}
-
-/* badge */
 .product-badge {
   position: absolute;
   top: 15px;
@@ -593,12 +560,8 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
 .product-badge.new { background: var(--secondary); }
 .product-badge.hot { background: var(--primary); }
 
-/* اطلاعات داخل همون باکس */
 .product-info {
   padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
 }
 
 .product-category {
@@ -613,9 +576,6 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   font-weight: 800;
   margin-bottom: 0.6rem;
   color: var(--dark);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .product-desc {
@@ -623,12 +583,7 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   color: var(--gray);
   margin-bottom: 1.2rem;
   line-height: 1.5;
-  flex: 1;
   min-height: 2.6em;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
 .product-footer {
@@ -636,7 +591,6 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: auto;
 }
 
 .product-price {
@@ -664,14 +618,11 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   color: white;
   border: none;
   font-size: 1.3rem;
-  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   display: grid;
   place-items: center;
   box-shadow: 0 6px 20px rgba(255,71,87,0.35);
-  flex-shrink: 0;
-  line-height: 1;
 }
 
 .add-btn:hover {
@@ -680,12 +631,6 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
 }
 
 .add-btn:active { transform: scale(0.95) rotate(90deg); }
-
-.add-btn.added {
-  background: linear-gradient(135deg, #2ed573, #1e9e57);
-  transform: scale(1.1) rotate(0deg);
-  box-shadow: 0 8px 25px rgba(46,213,115,0.5);
-}
 
 /* ============ SUBCATEGORY TABS ============ */
 .subcategory-bar {
@@ -732,11 +677,7 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   grid-column: 1 / -1;
 }
 
-.empty-state h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  color: var(--dark);
-}
+.empty-state .emoji { font-size: 4rem; margin-bottom: 1rem; }
 
 /* ============ FEATURES ============ */
 .features-section {
@@ -794,9 +735,7 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
   border-radius: 20px;
   display: grid;
   place-items: center;
-  color: white;
-  font-size: 1.6rem;
-  font-weight: 900;
+  font-size: 2rem;
   box-shadow: 0 10px 30px rgba(255,71,87,0.4);
 }
 
@@ -830,14 +769,13 @@ header.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.08); }
 }
 
 .cta-box::before {
-  content: '';
+  content: '🍔';
   position: absolute;
-  width: 300px;
-  height: 300px;
-  border: 30px solid rgba(255,255,255,0.1);
-  border-radius: 50%;
-  top: -100px;
-  right: -100px;
+  font-size: 15rem;
+  opacity: 0.1;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%) rotate(-15deg);
 }
 
 .cta-box h2 {
@@ -896,7 +834,10 @@ footer {
 }
 
 .footer-col ul { list-style: none; }
-.footer-col ul li { margin-bottom: 0.7rem; }
+
+.footer-col ul li {
+  margin-bottom: 0.7rem;
+}
 
 .footer-col ul li a {
   color: rgba(255,255,255,0.6);
@@ -905,7 +846,10 @@ footer {
   transition: var(--transition-smooth);
 }
 
-.footer-col ul li a:hover { color: var(--primary); padding-right: 5px; }
+.footer-col ul li a:hover {
+  color: var(--primary);
+  padding-right: 5px;
+}
 
 .footer-bottom {
   max-width: 1400px;
@@ -930,7 +874,7 @@ footer {
   align-items: center;
   gap: 0.7rem;
   font-weight: 600;
-  z-index: 3000;
+  z-index: 4000;
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border: 1px solid rgba(255,255,255,0.1);
@@ -949,509 +893,244 @@ footer {
   display: grid;
   place-items: center;
   font-size: 0.9rem;
-  font-weight: 900;
 }
 
 /* ============ CART DRAWER ============ */
-.cart-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15,15,26,0.6);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 2500;
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--transition-smooth);
-}
-
-.cart-overlay.show { opacity: 1; visibility: visible; }
-
 .cart-drawer {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 420px;
-  max-width: 100%;
+  left: -100%;
+  width: 100%;
+  max-width: 420px;
   height: 100vh;
   background: white;
-  z-index: 2600;
-  transform: translateX(-100%);
-  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 2500;
   display: flex;
   flex-direction: column;
-  box-shadow: 10px 0 60px rgba(0,0,0,0.3);
+  box-shadow: 10px 0 50px rgba(0,0,0,0.2);
+  transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.cart-drawer.open { transform: translateX(0); }
+.cart-drawer.open { left: 0; }
 
 .cart-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 1.5rem;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-  background: linear-gradient(135deg, #fff, #f8f9fa);
-}
-
-.cart-header h2 {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: var(--dark);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.6rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
 }
 
-.cart-header .cart-count-label {
-  font-size: 0.8rem;
-  color: var(--primary);
-  background: rgba(255,71,87,0.1);
-  padding: 0.2rem 0.7rem;
-  border-radius: 50px;
-  font-weight: 700;
-}
+.cart-header h3 { font-size: 1.2rem; font-weight: 800; }
 
 .cart-close {
-  width: 38px;
-  height: 38px;
-  border: none;
-  background: rgba(0,0,0,0.05);
-  border-radius: 50%;
-  font-size: 1.1rem;
-  cursor: pointer;
+  width: 40px; height: 40px;
+  border: none; background: rgba(255,255,255,0.2);
+  color: white; border-radius: 50%;
+  font-size: 1.2rem; cursor: pointer;
   transition: var(--transition-smooth);
-  display: grid;
-  place-items: center;
-  color: var(--dark);
 }
+.cart-close:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
 
-.cart-close:hover { background: rgba(255,71,87,0.1); color: var(--primary); transform: rotate(90deg); }
-
-.cart-body {
+.cart-items {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem 1.5rem;
+  padding: 1.2rem;
 }
-
-.cart-body::-webkit-scrollbar { width: 6px; }
-.cart-body::-webkit-scrollbar-track { background: transparent; }
-.cart-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
 
 .cart-empty {
   text-align: center;
-  padding: 4rem 1rem;
+  padding: 3rem 1rem;
   color: var(--gray);
 }
-
-.cart-empty-icon {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 1.5rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #fff5f6, #ffeedd);
-  display: grid;
-  place-items: center;
-  color: var(--primary);
-}
-
-.cart-empty h3 {
-  font-size: 1.2rem;
-  color: var(--dark);
-  margin-bottom: 0.5rem;
-}
-
-.cart-empty p { font-size: 0.9rem; }
+.cart-empty .emoji { font-size: 4rem; margin-bottom: 1rem; display: block; }
 
 .cart-item {
   display: flex;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.cart-item-image {
-  width: 75px;
-  height: 75px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #fff5f6, #ffeedd);
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-}
-
-.cart-item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.cart-item-image .img-fallback-small {
-  font-size: 0.6rem;
-  color: var(--primary);
-  font-weight: 700;
-  text-align: center;
-  padding: 0.3rem;
-  line-height: 1.2;
-}
-
-.cart-item-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.cart-item-name {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--dark);
-  margin-bottom: 0.3rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.cart-item-price {
-  font-size: 0.82rem;
-  color: var(--primary);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.cart-item-actions {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-top: auto;
-}
-
-.qty-control {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  gap: 0.9rem;
+  padding: 0.9rem;
   background: var(--light);
-  border-radius: 50px;
-  padding: 0.2rem;
+  border-radius: 16px;
+  margin-bottom: 0.8rem;
+  animation: fadeUp 0.3s ease;
 }
 
-.qty-btn {
-  width: 26px;
-  height: 26px;
-  border: none;
-  background: white;
-  border-radius: 50%;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  color: var(--dark);
+.cart-item-img {
+  width: 60px; height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff5f6, #ffeedd);
+  display: grid; place-items: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-info h4 {
+  font-size: 0.9rem; font-weight: 700;
+  margin-bottom: 0.3rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cart-item-info .item-price {
+  font-size: 0.85rem; color: var(--primary); font-weight: 700;
+}
+
+.cart-item-qty {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.cart-item-qty button {
+  width: 28px; height: 28px;
+  border: none; border-radius: 8px;
+  background: white; color: var(--dark);
+  font-size: 1rem; font-weight: 700; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: var(--transition-smooth);
-  line-height: 1;
 }
-
-.qty-btn:hover { background: var(--primary); color: white; }
-
-.qty-value {
-  min-width: 22px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--dark);
-}
+.cart-item-qty button:hover { background: var(--primary); color: white; }
+.cart-item-qty span { font-weight: 700; min-width: 20px; text-align: center; }
 
 .cart-item-remove {
-  background: none;
-  border: none;
-  color: var(--gray);
-  font-size: 0.78rem;
-  cursor: pointer;
+  background: none; border: none;
+  color: var(--gray); font-size: 1.1rem; cursor: pointer;
   transition: var(--transition-smooth);
-  padding: 0.2rem 0.4rem;
-  border-radius: 6px;
 }
-
-.cart-item-remove:hover { color: var(--primary); background: rgba(255,71,87,0.08); }
+.cart-item-remove:hover { color: var(--primary); transform: scale(1.2); }
 
 .cart-footer {
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-top: 1px solid rgba(0,0,0,0.08);
-  background: linear-gradient(135deg, #fff, #f8f9fa);
+  background: white;
 }
 
 .cart-total {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.2rem;
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 1rem;
+  font-size: 1.1rem; font-weight: 800;
 }
-
-.cart-total-label {
-  font-size: 1rem;
-  color: var(--gray);
-  font-weight: 600;
-}
-
-.cart-total-value {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--dark);
+.cart-total .total-price {
+  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.25rem;
 }
 
 .checkout-btn {
   width: 100%;
-  padding: 1.1rem;
+  padding: 1rem;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
-  border: none;
-  border-radius: 16px;
-  font-family: inherit;
-  font-size: 1.05rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 10px 30px rgba(255,71,87,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  color: white; border: none; border-radius: 14px;
+  font-family: inherit; font-weight: 800; font-size: 1rem;
+  cursor: pointer; transition: var(--transition);
+  box-shadow: 0 8px 25px rgba(255,71,87,0.4);
 }
-
-.checkout-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(255,71,87,0.6);
-}
+.checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(255,71,87,0.6); }
+.checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 /* ============ CHECKOUT MODAL ============ */
-.checkout-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15,15,26,0.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  z-index: 2700;
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--transition-smooth);
-  display: grid;
-  place-items: center;
-  padding: 1rem;
-}
-
-.checkout-overlay.show { opacity: 1; visibility: visible; }
-
 .checkout-modal {
+  position: fixed; inset: 0;
+  z-index: 3000;
+  display: grid; place-items: center;
+  padding: 1.5rem;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  opacity: 0; visibility: hidden;
+  transition: var(--transition-smooth);
+}
+.checkout-modal.show { opacity: 1; visibility: visible; }
+
+.checkout-box {
   background: white;
   border-radius: 28px;
-  width: 100%;
-  max-width: 520px;
+  padding: 2rem;
+  max-width: 440px; width: 100%;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  transform: scale(0.9);
+  transition: var(--transition);
+  text-align: center;
+  position: relative;
   max-height: 90vh;
   overflow-y: auto;
-  padding: 2.5rem;
-  position: relative;
-  transform: scale(0.9) translateY(20px);
-  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
 }
+.checkout-modal.show .checkout-box { transform: scale(1); }
 
-.checkout-overlay.show .checkout-modal {
-  transform: scale(1) translateY(0);
-}
-
-.checkout-modal::-webkit-scrollbar { width: 6px; }
-.checkout-modal::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
-
-.checkout-close {
-  position: absolute;
-  top: 1.2rem;
-  left: 1.2rem;
-  width: 38px;
-  height: 38px;
-  border: none;
-  background: rgba(0,0,0,0.05);
-  border-radius: 50%;
-  font-size: 1.1rem;
-  cursor: pointer;
+.checkout-box .modal-close {
+  position: absolute; top: 14px; left: 14px;
+  width: 36px; height: 36px;
+  border: none; background: var(--light);
+  border-radius: 50%; cursor: pointer;
+  font-size: 1rem; color: var(--gray);
   transition: var(--transition-smooth);
-  display: grid;
-  place-items: center;
-  color: var(--dark);
 }
+.checkout-box .modal-close:hover { background: var(--primary); color: white; }
 
-.checkout-close:hover { background: rgba(255,71,87,0.1); color: var(--primary); transform: rotate(90deg); }
-
-.checkout-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1.5rem;
+.checkout-box .modal-icon {
+  width: 80px; height: 80px;
+  margin: 0 auto 1.2rem;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   border-radius: 24px;
-  display: grid;
-  place-items: center;
-  color: white;
-  box-shadow: 0 15px 40px rgba(255,71,87,0.4);
+  display: grid; place-items: center;
+  font-size: 2.5rem;
+  box-shadow: 0 12px 35px rgba(255,71,87,0.4);
 }
+.checkout-box h3 { font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem; }
+.checkout-box > p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.7; }
 
-.checkout-modal h2 {
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: var(--dark);
-  margin-bottom: 0.5rem;
-}
+.contact-options { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1rem; }
 
-.checkout-modal > p {
-  text-align: center;
-  color: var(--gray);
-  font-size: 0.95rem;
-  margin-bottom: 2rem;
-  line-height: 1.7;
-}
-
-.order-summary {
-  background: linear-gradient(135deg, #fff5f6, #ffeedd);
-  border-radius: 18px;
-  padding: 1.3rem;
-  margin-bottom: 1.8rem;
-  border: 1px dashed rgba(255,71,87,0.3);
-}
-
-.order-summary-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.order-summary-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.88rem;
-  color: var(--dark);
-  padding: 0.35rem 0;
-}
-
-.order-summary-row.total {
-  border-top: 1px dashed rgba(255,71,87,0.3);
-  margin-top: 0.6rem;
-  padding-top: 0.7rem;
-  font-weight: 900;
-  font-size: 1rem;
-}
-
-.order-summary-row.total .amount {
-  color: var(--primary);
-  font-size: 1.15rem;
-}
-
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
-}
-
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.contact-option {
+  display: flex; align-items: center; gap: 0.9rem;
   padding: 1rem 1.2rem;
+  background: var(--light);
   border-radius: 16px;
   text-decoration: none;
   color: var(--dark);
+  font-weight: 700;
   transition: var(--transition);
-  border: 2px solid rgba(0,0,0,0.06);
-  background: white;
+  border: 2px solid transparent;
+  text-align: right;
 }
-
-.contact-link:hover {
-  transform: translateX(-5px);
+.contact-option:hover {
+  transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-color: var(--primary);
 }
-
-.contact-link .contact-icon {
-  width: 50px;
-  height: 50px;
+.contact-option .contact-icon {
+  width: 48px; height: 48px;
   border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: white;
+  display: grid; place-items: center;
+  font-size: 1.5rem; color: white;
   flex-shrink: 0;
 }
-
-.contact-link.telegram .contact-icon {
-  background: linear-gradient(135deg, #0088cc, #0077b5);
-}
-
-.contact-link.instagram .contact-icon {
-  background: linear-gradient(135deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
-}
-
-.contact-link.phone .contact-icon {
-  background: linear-gradient(135deg, #2ed573, #1e9e57);
-}
-
-.contact-link .contact-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.contact-link .contact-label {
-  font-size: 0.78rem;
-  color: var(--gray);
-  margin-bottom: 0.2rem;
-}
-
-.contact-link .contact-value {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--dark);
-  direction: ltr;
-  text-align: right;
-  unicode-bidi: plaintext;
-}
-
-.contact-link .contact-arrow {
-  color: var(--gray);
-  transition: var(--transition-smooth);
-}
-
-.contact-link:hover .contact-arrow {
-  color: var(--primary);
-  transform: translateX(-4px);
-}
-
-.contact-link.telegram:hover { border-color: #0088cc; }
-.contact-link.instagram:hover { border-color: #d62976; }
-.contact-link.phone:hover { border-color: #2ed573; }
+.contact-option.telegram .contact-icon { background: linear-gradient(135deg, #0088cc, #006699); }
+.contact-option.instagram .contact-icon { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.contact-option.phone .contact-icon { background: linear-gradient(135deg, #2ed573, #1e9e57); }
+.contact-option .contact-text { display: flex; flex-direction: column; }
+.contact-option .contact-text small { font-size: 0.75rem; color: var(--gray); font-weight: 500; }
+.contact-option .contact-text span { font-size: 0.95rem; }
 
 .checkout-note {
-  text-align: center;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--gray);
-  line-height: 1.7;
-  padding: 1rem;
-  background: rgba(255,165,2,0.08);
+  background: rgba(255,165,2,0.1);
+  border: 1px solid rgba(255,165,2,0.3);
   border-radius: 12px;
-  border: 1px solid rgba(255,165,2,0.2);
+  padding: 0.8rem 1rem;
+  margin-top: 0.5rem;
+  line-height: 1.7;
 }
-
-.checkout-note strong { color: var(--secondary); }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 1024px) {
+  .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+  .hero p { margin: 0 auto 2rem; }
+  .hero-buttons, .hero-stats { justify-content: center; }
+  .hero-glass-card { max-width: 440px; margin: 0 auto; }
   .footer-container { grid-template-columns: 1fr 1fr; }
 }
 
@@ -1460,45 +1139,25 @@ footer {
   .mobile-menu-btn { display: grid; place-items: center; }
   .order-btn { display: none; }
   .nav-container { padding: 0.8rem 1rem; }
-  .hero-content { padding: 120px 1rem 100px; }
-  .hero::after { height: 120px; }
+  .hero { padding: 120px 1rem 40px; min-height: 100vh; }
+  .hero-stats { gap: 1.5rem; }
+  .stat-item h3 { font-size: 1.5rem; }
   .section { padding: 3rem 1rem; }
-  
-  .products-grid { 
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem; 
-  }
-  .product-image { height: 180px; }
-  .product-info { padding: 1rem; }
-  .product-title { font-size: 1rem; }
-  .product-desc { font-size: 0.78rem; }
-  .product-price .price { font-size: 1rem; }
-  .add-btn { width: 38px; height: 38px; font-size: 1.1rem; border-radius: 11px; }
-  .product-badge { font-size: 0.65rem; padding: 0.3rem 0.7rem; top: 10px; right: 10px; }
-  
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
   .footer-container { grid-template-columns: 1fr; gap: 2rem; }
   .cta-box { padding: 3rem 1.5rem; }
   .category-filter { gap: 0.5rem; }
   .filter-btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
-  .hero-stats { gap: 1rem; }
-  .stat-item { padding: 1rem 1.4rem; min-width: 110px; }
-  .stat-item h3 { font-size: 1.4rem; }
-  .cart-drawer { width: 100%; }
-  .checkout-modal { padding: 1.8rem; }
-  .checkout-modal h2 { font-size: 1.3rem; }
-  .contact-link { padding: 0.8rem 1rem; }
-  .contact-link .contact-icon { width: 42px; height: 42px; }
-  .contact-link .contact-value { font-size: 0.85rem; }
+  .cart-drawer { max-width: 100%; }
 }
 
-@media (max-width: 380px) {
-  .products-grid { gap: 0.7rem; }
-  .product-info { padding: 0.7rem; }
-  .product-title { font-size: 0.85rem; }
-  .product-desc { font-size: 0.7rem; }
-  .product-image { height: 150px; }
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .hero-buttons { flex-direction: column; width: 100%; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
 }
 
+/* Mobile menu */
 .mobile-menu {
   position: fixed;
   top: 0;
@@ -1562,26 +1221,20 @@ footer {
 <header id="header">
   <nav class="nav-container">
     <a href="#" class="logo">
-      <div class="logo-icon">
-        <img src="images/logo.png" alt="لوگو" onerror="this.style.display='none'; this.parentElement.innerHTML='<span>خ</span>';">
-      </div>
+      <div class="logo-icon">🍔</div>
       <span>خونه‌برگر</span>
     </a>
 
     <ul class="nav-links">
-      <li><a href="#home" class="active" data-section="home">خانه</a></li>
-      <li><a href="#products" data-section="products">محصولات</a></li>
-      <li><a href="#features" data-section="features">ویژگی‌ها</a></li>
-      <li><a href="#contact" data-section="contact">تماس</a></li>
+      <li><a href="#home" class="active" data-section="home"><span class="nav-icon">🏠</span>خانه</a></li>
+      <li><a href="#products" data-section="products"><span class="nav-icon">🛒</span>محصولات</a></li>
+      <li><a href="#features" data-section="features"><span class="nav-icon">⭐</span>ویژگی‌ها</a></li>
+      <li><a href="#contact" data-section="contact"><span class="nav-icon">📞</span>تماس</a></li>
     </ul>
 
     <div class="nav-actions">
       <button class="cart-btn" id="cartBtn" aria-label="سبد خرید">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
+        🛒
         <span class="cart-badge" id="cartBadge">0</span>
       </button>
       <button class="order-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
@@ -1596,59 +1249,68 @@ footer {
 <div class="overlay" id="overlay"></div>
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-header">
-    <a href="#" class="logo"><div class="logo-icon"><span>خ</span></div><span>خونه‌برگر</span></a>
+    <a href="#" class="logo"><div class="logo-icon">🍔</div><span>خونه‌برگر</span></a>
     <button class="close-menu" id="closeMenu">✕</button>
   </div>
   <ul>
-    <li><a href="#home">خانه</a></li>
-    <li><a href="#products">محصولات</a></li>
-    <li><a href="#features">ویژگی‌ها</a></li>
-    <li><a href="#contact">تماس</a></li>
+    <li><a href="#home">🏠 خانه</a></li>
+    <li><a href="#products">🛒 محصولات</a></li>
+    <li><a href="#features">⭐ ویژگی‌ها</a></li>
+    <li><a href="#contact">📞 تماس</a></li>
   </ul>
 </div>
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO (FULL IMAGE) ============ -->
 <section class="hero" id="home">
-  <div class="hero-bg" id="heroBg">
-    <img src="https://uploadkon.ir/uploads/d35d29_26Rustic-Burger-and-Sausage-Feast.png" alt="غذای خانگی" 
-         onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<div class=&quot;hero-bg-fallback&quot;></div>');">
-  </div>
+  <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
-
   <div class="hero-content">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      تازه و خانگی، هر روز
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        تازه و خانگی، هر روز
+      </div>
+      <h1>
+        طعم <span class="gradient-text">خانگی</span><br>
+        با کیفیت <span class="gradient-text">رستورانی</span>
+      </h1>
+      <p>
+        سوسیس، کالباس، برگر و سس‌های کاملاً خانگی با بهترین مواد اولیه.
+        بدون مواد نگهدارنده، بدون رنگ مصنوعی، فقط طعم اصیل.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+          🛍️ مشاهده محصولات
+        </button>
+        <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+          ✨ چرا ما؟
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>+۵۰۰۰</h3>
+          <p>مشتری راضی</p>
+        </div>
+        <div class="stat-item">
+          <h3>+۵۰</h3>
+          <p>محصول متنوع</p>
+        </div>
+        <div class="stat-item">
+          <h3>۴.۹ ⭐</h3>
+          <p>امتیاز مشتریان</p>
+        </div>
+      </div>
     </div>
-    <h1>
-      طعم <span class="gradient-text">خانگی</span><br>
-      با کیفیت <span class="gradient-text">رستورانی</span>
-    </h1>
-    <p>
-      سوسیس، کالباس، برگر و سس‌های کاملاً خانگی با بهترین مواد اولیه.
-      بدون مواد نگهدارنده، بدون رنگ مصنوعی، فقط طعم اصیل.
-    </p>
-    <div class="hero-buttons">
-      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
-        مشاهده محصولات
-      </button>
-      <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
-        چرا ما؟
-      </button>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <h3>+۵۰۰۰</h3>
-        <p>مشتری راضی</p>
-      </div>
-      <div class="stat-item">
-        <h3>+۵۰</h3>
-        <p>محصول متنوع</p>
-      </div>
-      <div class="stat-item">
-        <h3>۴.۹</h3>
-        <p>امتیاز مشتریان</p>
-      </div>
+    <div class="hero-glass-card">
+      <div class="glass-icon">👨‍🍳</div>
+      <h3>پخت روزانه، تحویل تازه</h3>
+      <p>هر سفارش بعد از ثبت، تازه تهیه و بسته‌بندی می‌شه تا طعم واقعی خانگی رو حس کنی.</p>
+      <ul class="glass-list">
+        <li><span class="chk">✓</span> گوشت و مرغ تازه روز</li>
+        <li><span class="chk">✓</span> بدون مواد نگهدارنده</li>
+        <li><span class="chk">✓</span> بسته‌بندی بهداشتی</li>
+        <li><span class="chk">✓</span> ارسال سریع درون‌شهری</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -1662,15 +1324,24 @@ footer {
   </div>
 
   <div class="category-filter" id="categoryFilter">
-    <button class="filter-btn active" data-category="all">همه</button>
-    <button class="filter-btn" data-category="sausage">سوسیس</button>
-    <button class="filter-btn" data-category="kabab">کالباس</button>
-    <button class="filter-btn" data-category="burger">برگر</button>
-    <button class="filter-btn" data-category="sauce">سس</button>
+    <button class="filter-btn active" data-category="all">
+      <span class="emoji">🍽️</span> همه
+    </button>
+    <button class="filter-btn" data-category="sausage">
+      <span class="emoji">🌭</span> سوسیس
+    </button>
+    <button class="filter-btn" data-category="kabab">
+      <span class="emoji">🥓</span> کالباس
+    </button>
+    <button class="filter-btn" data-category="burger">
+      <span class="emoji">🍔</span> برگر
+    </button>
+    <button class="filter-btn" data-category="sauce">
+      <span class="emoji">🥫</span> سس
+    </button>
   </div>
 
   <div class="subcategory-bar hidden" id="subcategoryBar"></div>
-
   <div class="products-grid" id="productsGrid"></div>
 </section>
 
@@ -1683,22 +1354,22 @@ footer {
   </div>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon">۱</div>
+      <div class="feature-icon">🌿</div>
       <h3>۱۰۰٪ طبیعی</h3>
       <p>بدون مواد نگهدارنده و رنگ مصنوعی</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">۲</div>
+      <div class="feature-icon">👨‍🍳</div>
       <h3>دست‌ساز</h3>
       <p>هر محصول با دقت و عشق تهیه می‌شه</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">۳</div>
+      <div class="feature-icon">🚀</div>
       <h3>ارسال سریع</h3>
       <p>سفارش شما در کمترین زمان به دستتون می‌رسه</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">۴</div>
+      <div class="feature-icon">💯</div>
       <h3>ضمانت کیفیت</h3>
       <p>رضایت شما اولویت ماست</p>
     </div>
@@ -1711,7 +1382,7 @@ footer {
     <h2>امروز چی می‌خوای بخوری؟</h2>
     <p>همین حالا سفارشت رو ثبت کن و طعم خانگی رو تجربه کن</p>
     <button class="btn-secondary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
-      شروع سفارش
+      🛒 شروع سفارش
     </button>
   </div>
 </section>
@@ -1721,7 +1392,7 @@ footer {
   <div class="footer-container">
     <div class="footer-brand">
       <a href="#" class="logo">
-        <div class="logo-icon"><span>خ</span></div>
+        <div class="logo-icon">🍔</div>
         <span>خونه‌برگر</span>
       </a>
       <p>فست‌فود خانگی با کیفیت رستورانی. سوسیس، کالباس، برگر و سس‌های دست‌ساز با بهترین مواد اولیه.</p>
@@ -1746,9 +1417,9 @@ footer {
     <div class="footer-col">
       <h4>تماس با ما</h4>
       <ul>
-        <li><a href="#">۰۲۱-۱۲۳۴۵۶۷۸</a></li>
-        <li><a href="#">info@khoneburger.ir</a></li>
-        <li><a href="#">تهران، خیابان اصلی</a></li>
+        <li><a href="tel:+982112345678">📞 ۰۲۱-۱۲۳۴۵۶۷۸</a></li>
+        <li><a href="https://t.me/yourusername" target="_blank">💬 تلگرام</a></li>
+        <li><a href="https://instagram.com/yourusername" target="_blank">📷 اینستاگرام</a></li>
       </ul>
     </div>
   </div>
@@ -1758,109 +1429,53 @@ footer {
 </footer>
 
 <!-- ============ CART DRAWER ============ -->
-<div class="cart-overlay" id="cartOverlay"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-header">
-    <h2>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="9" cy="21" r="1"></circle>
-        <circle cx="20" cy="21" r="1"></circle>
-        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-      </svg>
-      سبد خرید
-      <span class="cart-count-label" id="cartCountLabel">۰ محصول</span>
-    </h2>
+    <h3>🛒 سبد خرید</h3>
     <button class="cart-close" id="cartClose">✕</button>
   </div>
-
-  <div class="cart-body" id="cartBody"></div>
-
-  <div class="cart-footer" id="cartFooter" style="display:none;">
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
     <div class="cart-total">
-      <span class="cart-total-label">مبلغ کل:</span>
-      <span class="cart-total-value" id="cartTotal">۰ تومان</span>
+      <span>جمع کل:</span>
+      <span class="total-price" id="cartTotal">۰ تومان</span>
     </div>
-    <button class="checkout-btn" id="checkoutBtn">
-      ادامه خرید
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-    </button>
+    <button class="checkout-btn" id="checkoutBtn">ادامه خرید و ثبت سفارش</button>
   </div>
 </div>
 
 <!-- ============ CHECKOUT MODAL ============ -->
-<div class="checkout-overlay" id="checkoutOverlay">
-  <div class="checkout-modal">
-    <button class="checkout-close" id="checkoutClose">✕</button>
-
-    <div class="checkout-icon">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-      </svg>
-    </div>
-
-    <h2>ثبت سفارش</h2>
-    <p>برای تکمیل سفارش، لطفاً با یکی از راه‌های زیر با ما در تماس باشید</p>
-
-    <div class="order-summary" id="orderSummary"></div>
-
-    <div class="contact-links">
-      <a href="https://t.me/YOUR_TELEGRAM_ID" target="_blank" class="contact-link telegram">
-        <div class="contact-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-          </svg>
-        </div>
-        <div class="contact-info">
-          <div class="contact-label">آیدی تلگرام</div>
-          <div class="contact-value">@YOUR_TELEGRAM_ID</div>
-        </div>
-        <div class="contact-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-box">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-icon">📞</div>
+    <h3>ثبت نهایی سفارش</h3>
+    <p>برای نهایی‌سازی سفارش، از یکی از راه‌های زیر با ما در تماس باش و سفارشت رو ثبت کن:</p>
+    <div class="contact-options">
+      <a class="contact-option telegram" href="https://t.me/yourusername" target="_blank" rel="noopener">
+        <div class="contact-icon">✈️</div>
+        <div class="contact-text">
+          <small>تلگرام</small>
+          <span>@yourusername</span>
         </div>
       </a>
-
-      <a href="https://instagram.com/YOUR_INSTAGRAM_ID" target="_blank" class="contact-link instagram">
-        <div class="contact-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-          </svg>
-        </div>
-        <div class="contact-info">
-          <div class="contact-label">آیدی اینستاگرام</div>
-          <div class="contact-value">@YOUR_INSTAGRAM_ID</div>
-        </div>
-        <div class="contact-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
+      <a class="contact-option instagram" href="https://instagram.com/yourusername" target="_blank" rel="noopener">
+        <div class="contact-icon">📷</div>
+        <div class="contact-text">
+          <small>اینستاگرام</small>
+          <span>@yourusername</span>
         </div>
       </a>
-
-      <a href="tel:+989123456789" class="contact-link phone">
-        <div class="contact-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-          </svg>
-        </div>
-        <div class="contact-info">
-          <div class="contact-label">شماره تماس</div>
-          <div class="contact-value">۰۹۱۲ ۳۴۵ ۶۷۸۹</div>
-        </div>
-        <div class="contact-arrow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
+      <a class="contact-option phone" href="tel:+982112345678">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text">
+          <small>تماس تلفنی</small>
+          <span>۰۲۱-۱۲۳۴۵۶۷۸</span>
         </div>
       </a>
     </div>
-
     <div class="checkout-note">
-      <strong>توجه:</strong> پس از تماس، خلاصه سفارش شما بررسی و ارسال می‌شود.
+      📝 لطفاً هنگام تماس، لیست سفارش خود را از سبد خرید (اسکرین‌شات) ارسال کنید تا سریع‌تر ثبت شود.
     </div>
   </div>
 </div>
@@ -1873,51 +1488,288 @@ footer {
 
 <script>
 /* =============================================================
-   📦 DATA
+   ⚙️ تنظیمات تماس - اینجا آیدی‌ها رو عوض کن
    ============================================================= */
+const CONTACT_INFO = {
+  telegram: 'yourusername',      // بدون @
+  instagram: 'yourusername',     // بدون @
+  phone: '+982112345678'         // با کد کشور
+};
 
+/* =============================================================
+   🗂️ زیرمجموعه‌ها
+   ============================================================= */
 const subcategoriesData = {
   sausage: [
-    { key: 'meat', name: 'گوشت قرمز' },
-    { key: 'chicken', name: 'مرغ' },
-    { key: 'special', name: 'ویژه' }
+    { key: 'meat', name: 'گوشت قرمز', emoji: '🥩' },
+    { key: 'chicken', name: 'مرغ', emoji: '🐔' },
+    { key: 'special', name: 'ویژه', emoji: '⭐' }
   ],
   kabab: [
-    { key: 'dry', name: 'خشک' },
-    { key: 'soft', name: 'نرم' },
-    { key: 'special', name: 'ویژه' }
+    { key: 'dry', name: 'خشک', emoji: '🌾' },
+    { key: 'soft', name: 'نرم', emoji: '☁️' },
+    { key: 'special', name: 'ویژه', emoji: '✨' }
   ]
 };
 
+/* =============================================================
+   🛍️ محصولات
+   -------------------------------------------------------------
+   🔴 فیلد image: لینک عکس محصول رو اینجا بذار.
+   اگر خالی باشه، ایموجی نمایش داده می‌شه.
+   ============================================================= */
 const productsData = [
-  { id: 1, name: 'سوسیس گوشت قرمز کوکتل', category: 'sausage', subcategory: 'meat', price: 85000, oldPrice: 98000, desc: 'سوسیس کوکتل با گوشت قرمز خالص، بدون مواد نگهدارنده', image: 'images/sausage-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
-  { id: 2, name: 'سوسیس مرغ ویژه', category: 'sausage', subcategory: 'chicken', price: 65000, oldPrice: null, desc: 'سوسیس مرغ خانگی با طعم بی‌نظیر و بافت نرم', image: 'images/sausage-2.jpg', badge: 'new', badgeText: 'جدید' },
-  { id: 3, name: 'سوسیس گوشت قرمز ویژه', category: 'sausage', subcategory: 'meat', price: 95000, oldPrice: 110000, desc: 'سوسیس ویژه با گوشت قرمز درجه یک و ادویه‌های مخصوص', image: 'images/sausage-3.jpg', badge: null, badgeText: null },
-  { id: 4, name: 'سوسیس مرغ پنیری', category: 'sausage', subcategory: 'chicken', price: 75000, oldPrice: null, desc: 'سوسیس مرغ با مغز پنیر، ترکیبی عالی برای صبحانه', image: 'images/sausage-4.jpg', badge: 'new', badgeText: 'جدید' },
-  { id: 5, name: 'سوسیس ویژه خانگی', category: 'sausage', subcategory: 'special', price: 120000, oldPrice: 140000, desc: 'سوسیس ویژه با ترکیب گوشت گوساله و مرغ', image: 'images/sausage-5.jpg', badge: 'hot', badgeText: 'ویژه' },
-  { id: 6, name: 'کالباس خشک گوشت', category: 'kabab', subcategory: 'dry', price: 130000, oldPrice: 150000, desc: 'کالباس خشک با گوشت قرمز خالص، مناسب برای ساندویچ', image: 'images/kabab-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
-  { id: 7, name: 'کالباس نرم مرغ', category: 'kabab', subcategory: 'soft', price: 95000, oldPrice: null, desc: 'کالباس نرم مرغ با بافت لطیف و طعم خانگی', image: 'images/kabab-2.jpg', badge: null, badgeText: null },
-  { id: 8, name: 'کالباس خشک ویژه', category: 'kabab', subcategory: 'dry', price: 145000, oldPrice: 165000, desc: 'کالباس خشک ویژه با ادویه‌های مخصوص و دودی', image: 'images/kabab-3.jpg', badge: 'new', badgeText: 'جدید' },
-  { id: 9, name: 'کالباس نرم پنیری', category: 'kabab', subcategory: 'soft', price: 105000, oldPrice: null, desc: 'کالباس نرم با مغز پنیر و طعم بی‌نظیر', image: 'images/kabab-4.jpg', badge: null, badgeText: null },
-  { id: 10, name: 'کالباس ویژه خانگی', category: 'kabab', subcategory: 'special', price: 160000, oldPrice: 185000, desc: 'کالباس ویژه با ترکیب گوشت و مرغ درجه یک', image: 'images/kabab-5.jpg', badge: 'hot', badgeText: 'ویژه' },
-  { id: 11, name: 'برگر گوشت قرمز دست‌ساز', category: 'burger', subcategory: null, price: 110000, oldPrice: 130000, desc: 'برگر دست‌ساز با گوشت قرمز چرخ‌شده تازه', image: 'images/burger-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
-  { id: 12, name: 'برگر مرغ خانگی', category: 'burger', subcategory: null, price: 90000, oldPrice: null, desc: 'برگر مرغ با سینه مرغ تازه و ادویه‌های مخصوص', image: 'images/burger-2.jpg', badge: null, badgeText: null },
-  { id: 13, name: 'برگر ویژه دوگانه', category: 'burger', subcategory: null, price: 150000, oldPrice: 175000, desc: 'برگر ویژه با دو لایه گوشت و پنیر گودا', image: 'images/burger-3.jpg', badge: 'new', badgeText: 'جدید' },
-  { id: 14, name: 'برگر گیاهی', category: 'burger', subcategory: null, price: 85000, oldPrice: null, desc: 'برگر گیاهی با پروتئین سویا و سبزیجات تازه', image: 'images/burger-4.jpg', badge: null, badgeText: null },
-  { id: 15, name: 'سس مایونز خانگی', category: 'sauce', subcategory: null, price: 45000, oldPrice: 55000, desc: 'سس مایونز خانگی با تخم‌مرغ تازه و روغن سالم', image: 'images/sauce-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
-  { id: 16, name: 'سس کچاپ طبیعی', category: 'sauce', subcategory: null, price: 40000, oldPrice: null, desc: 'سس کچاپ با گوجه‌فرنگی تازه و بدون مواد نگهدارنده', image: 'images/sauce-2.jpg', badge: null, badgeText: null },
-  { id: 17, name: 'سس مخصوص برگر', category: 'sauce', subcategory: null, price: 55000, oldPrice: 65000, desc: 'سس مخصوص برگر با ترکیب ادویه‌های ویژه', image: 'images/sauce-3.jpg', badge: 'new', badgeText: 'جدید' },
-  { id: 18, name: 'سس سیر خانگی', category: 'sauce', subcategory: null, price: 48000, oldPrice: null, desc: 'سس سیر تازه با طعم قوی و بی‌نظیر', image: 'images/sauce-4.jpg', badge: null, badgeText: null }
+  // ----- سوسیس -----
+  {
+    id: 1,
+    name: 'سوسیس گوشت قرمز کوکتل',
+    category: 'sausage',
+    subcategory: 'meat',
+    price: 85000,
+    oldPrice: 98000,
+    desc: 'سوسیس کوکتل با گوشت قرمز خالص، بدون مواد نگهدارنده',
+    emoji: '🌭',
+    image: '', // ← لینک عکس رو اینجا بذار
+    badge: 'hot',
+    badgeText: 'پرفروش'
+  },
+  {
+    id: 2,
+    name: 'سوسیس مرغ ویژه',
+    category: 'sausage',
+    subcategory: 'chicken',
+    price: 65000,
+    oldPrice: null,
+    desc: 'سوسیس مرغ خانگی با طعم بی‌نظیر و بافت نرم',
+    emoji: '🌭',
+    image: '',
+    badge: 'new',
+    badgeText: 'جدید'
+  },
+  {
+    id: 3,
+    name: 'سوسیس گوشت قرمز ویژه',
+    category: 'sausage',
+    subcategory: 'meat',
+    price: 95000,
+    oldPrice: 110000,
+    desc: 'سوسیس ویژه با گوشت قرمز درجه یک و ادویه‌های مخصوص',
+    emoji: '🌭',
+    image: '',
+    badge: null,
+    badgeText: null
+  },
+  {
+    id: 4,
+    name: 'سوسیس مرغ پنیری',
+    category: 'sausage',
+    subcategory: 'chicken',
+    price: 75000,
+    oldPrice: null,
+    desc: 'سوسیس مرغ با مغز پنیر، ترکیبی عالی برای صبحانه',
+    emoji: '🌭',
+    image: '',
+    badge: 'new',
+    badgeText: 'جدید'
+  },
+  {
+    id: 5,
+    name: 'سوسیس ویژه خانگی',
+    category: 'sausage',
+    subcategory: 'special',
+    price: 120000,
+    oldPrice: 140000,
+    desc: 'سوسیس ویژه با ترکیب گوشت گوساله و مرغ',
+    emoji: '🌭',
+    image: '',
+    badge: 'hot',
+    badgeText: 'ویژه'
+  },
+
+  // ----- کالباس -----
+  {
+    id: 6,
+    name: 'کالباس خشک گوشت',
+    category: 'kabab',
+    subcategory: 'dry',
+    price: 130000,
+    oldPrice: 150000,
+    desc: 'کالباس خشک با گوشت قرمز خالص، مناسب برای ساندویچ',
+    emoji: '🥓',
+    image: '',
+    badge: 'hot',
+    badgeText: 'پرفروش'
+  },
+  {
+    id: 7,
+    name: 'کالباس نرم مرغ',
+    category: 'kabab',
+    subcategory: 'soft',
+    price: 95000,
+    oldPrice: null,
+    desc: 'کالباس نرم مرغ با بافت لطیف و طعم خانگی',
+    emoji: '🥓',
+    image: '',
+    badge: null,
+    badgeText: null
+  },
+  {
+    id: 8,
+    name: 'کالباس خشک ویژه',
+    category: 'kabab',
+    subcategory: 'dry',
+    price: 145000,
+    oldPrice: 165000,
+    desc: 'کالباس خشک ویژه با ادویه‌های مخصوص و دودی',
+    emoji: '🥓',
+    image: '',
+    badge: 'new',
+    badgeText: 'جدید'
+  },
+  {
+    id: 9,
+    name: 'کالباس نرم پنیری',
+    category: 'kabab',
+    subcategory: 'soft',
+    price: 105000,
+    oldPrice: null,
+    desc: 'کالباس نرم با مغز پنیر و طعم بی‌نظیر',
+    emoji: '🥓',
+    image: '',
+    badge: null,
+    badgeText: null
+  },
+  {
+    id: 10,
+    name: 'کالباس ویژه خانگی',
+    category: 'kabab',
+    subcategory: 'special',
+    price: 160000,
+    oldPrice: 185000,
+    desc: 'کالباس ویژه با ترکیب گوشت و مرغ درجه یک',
+    emoji: '🥓',
+    image: '',
+    badge: 'hot',
+    badgeText: 'ویژه'
+  },
+
+  // ----- برگر -----
+  {
+    id: 11,
+    name: 'برگر گوشت قرمز دست‌ساز',
+    category: 'burger',
+    subcategory: null,
+    price: 110000,
+    oldPrice: 130000,
+    desc: 'برگر دست‌ساز با گوشت قرمز چرخ‌شده تازه',
+    emoji: '🍔',
+    image: '',
+    badge: 'hot',
+    badgeText: 'پرفروش'
+  },
+  {
+    id: 12,
+    name: 'برگر مرغ خانگی',
+    category: 'burger',
+    subcategory: null,
+    price: 90000,
+    oldPrice: null,
+    desc: 'برگر مرغ با سینه مرغ تازه و ادویه‌های مخصوص',
+    emoji: '🍔',
+    image: '',
+    badge: null,
+    badgeText: null
+  },
+  {
+    id: 13,
+    name: 'برگر ویژه دوگانه',
+    category: 'burger',
+    subcategory: null,
+    price: 150000,
+    oldPrice: 175000,
+    desc: 'برگر ویژه با دو لایه گوشت و پنیر گودا',
+    emoji: '🍔',
+    image: '',
+    badge: 'new',
+    badgeText: 'جدید'
+  },
+  {
+    id: 14,
+    name: 'برگر گیاهی',
+    category: 'burger',
+    subcategory: null,
+    price: 85000,
+    oldPrice: null,
+    desc: 'برگر گیاهی با پروتئین سویا و سبزیجات تازه',
+    emoji: '🍔',
+    image: '',
+    badge: null,
+    badgeText: null
+  },
+
+  // ----- سس -----
+  {
+    id: 15,
+    name: 'سس مایونز خانگی',
+    category: 'sauce',
+    subcategory: null,
+    price: 45000,
+    oldPrice: 55000,
+    desc: 'سس مایونز خانگی با تخم‌مرغ تازه و روغن سالم',
+    emoji: '🥫',
+    image: '',
+    badge: 'hot',
+    badgeText: 'پرفروش'
+  },
+  {
+    id: 16,
+    name: 'سس کچاپ طبیعی',
+    category: 'sauce',
+    subcategory: null,
+    price: 40000,
+    oldPrice: null,
+    desc: 'سس کچاپ با گوجه‌فرنگی تازه و بدون مواد نگهدارنده',
+    emoji: '🥫',
+    image: '',
+    badge: null,
+    badgeText: null
+  },
+  {
+    id: 17,
+    name: 'سس مخصوص برگر',
+    category: 'sauce',
+    subcategory: null,
+    price: 55000,
+    oldPrice: 65000,
+    desc: 'سس مخصوص برگر با ترکیب ادویه‌های ویژه',
+    emoji: '🥫',
+    image: '',
+    badge: 'new',
+    badgeText: 'جدید'
+  },
+  {
+    id: 18,
+    name: 'سس سیر خانگی',
+    category: 'sauce',
+    subcategory: null,
+    price: 48000,
+    oldPrice: null,
+    desc: 'سس سیر تازه با طعم قوی و بی‌نظیر',
+    emoji: '🥫',
+    image: '',
+    badge: null,
+    badgeText: null
+  }
 ];
 
 /* =============================================================
-   ⚙️ STATE
+   ⚙️ LOGIC
    ============================================================= */
-
 let currentCategory = 'all';
 let currentSubcategory = 'all';
-let cart = [];
+let cart = []; // [{ id, qty }]
 
+// DOM
 const productsGrid = document.getElementById('productsGrid');
 const categoryFilter = document.getElementById('categoryFilter');
 const subcategoryBar = document.getElementById('subcategoryBar');
@@ -1925,18 +1777,31 @@ const cartBadge = document.getElementById('cartBadge');
 const toast = document.getElementById('toast');
 const toastText = document.getElementById('toastText');
 
+// Cart drawer elements
+const cartDrawer = document.getElementById('cartDrawer');
+const cartClose = document.getElementById('cartClose');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+// Checkout modal
+const checkoutModal = document.getElementById('checkoutModal');
+const modalClose = document.getElementById('modalClose');
+
+// 🎨 فرمت قیمت
 function formatPrice(price) {
   return price.toLocaleString('fa-IR') + ' تومان';
 }
 
-function imageFallbackHTML(productName) {
-  return `<div class="img-fallback">عکس: ${productName}</div>`;
+// 🖼️ رندر تصویر محصول
+function renderProductImage(product) {
+  if (product.image && product.image.trim() !== '') {
+    return `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.style.display='none';this.parentNode.innerHTML='${product.emoji || '🍔'}';" />`;
+  }
+  return product.emoji || '🍔';
 }
 
-/* =============================================================
-   🛍️ PRODUCT RENDERING - یک باکس واحد (مثل فایل اصلی)
-   ============================================================= */
-
+// 🖼️ ساخت کارت محصول
 function createProductCard(product, index) {
   const badgeHTML = product.badge 
     ? `<div class="product-badge ${product.badge}">${product.badgeText || ''}</div>` 
@@ -1946,7 +1811,12 @@ function createProductCard(product, index) {
     ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>` 
     : '';
   
-  const categoryNames = { sausage: 'سوسیس', kabab: 'کالباس', burger: 'برگر', sauce: 'سس' };
+  const categoryNames = {
+    sausage: 'سوسیس',
+    kabab: 'کالباس',
+    burger: 'برگر',
+    sauce: 'سس'
+  };
   
   let subcategoryName = '';
   if (product.subcategory && subcategoriesData[product.category]) {
@@ -1954,15 +1824,10 @@ function createProductCard(product, index) {
     if (sub) subcategoryName = ` • ${sub.name}`;
   }
 
-  const imageHTML = product.image
-    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" 
-         onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '${imageFallbackHTML(product.name).replace(/'/g, "\\'")}');">`
-    : imageFallbackHTML(product.name);
-
   return `
     <div class="product-card" style="animation-delay: ${index * 0.08}s" data-id="${product.id}">
       ${badgeHTML}
-      <div class="product-image">${imageHTML}</div>
+      <div class="product-image">${renderProductImage(product)}</div>
       <div class="product-info">
         <div class="product-category">${categoryNames[product.category]}${subcategoryName}</div>
         <h3 class="product-title">${product.name}</h3>
@@ -1972,21 +1837,29 @@ function createProductCard(product, index) {
             ${oldPriceHTML}
             <span class="price">${formatPrice(product.price)}</span>
           </div>
-          <button class="add-btn" onclick="addToCart(event, ${product.id})" aria-label="افزودن به سبد">+</button>
+          <button class="add-btn" onclick="addToCart(${product.id})" aria-label="افزودن به سبد">+</button>
         </div>
       </div>
     </div>
   `;
 }
 
+// 🔄 رندر محصولات
 function renderProducts() {
   let filtered = productsData;
-  if (currentCategory !== 'all') filtered = filtered.filter(p => p.category === currentCategory);
-  if (currentSubcategory !== 'all') filtered = filtered.filter(p => p.subcategory === currentSubcategory);
+  
+  if (currentCategory !== 'all') {
+    filtered = filtered.filter(p => p.category === currentCategory);
+  }
+  
+  if (currentSubcategory !== 'all') {
+    filtered = filtered.filter(p => p.subcategory === currentSubcategory);
+  }
   
   if (filtered.length === 0) {
     productsGrid.innerHTML = `
       <div class="empty-state">
+        <div class="emoji">🍽️</div>
         <h3>محصولی یافت نشد</h3>
         <p>لطفاً دسته‌بندی دیگری را انتخاب کنید</p>
       </div>
@@ -1997,6 +1870,7 @@ function renderProducts() {
   productsGrid.innerHTML = filtered.map((p, i) => createProductCard(p, i)).join('');
 }
 
+// 🔄 رندر نوار زیرمجموعه
 function renderSubcategories() {
   if (currentCategory === 'all' || !subcategoriesData[currentCategory]) {
     subcategoryBar.classList.add('hidden');
@@ -2011,10 +1885,12 @@ function renderSubcategories() {
   }
   
   subcategoryBar.classList.remove('hidden');
+  
   let html = `<button class="sub-btn ${currentSubcategory === 'all' ? 'active' : ''}" data-sub="all">همه</button>`;
   subs.forEach(sub => {
-    html += `<button class="sub-btn ${currentSubcategory === sub.key ? 'active' : ''}" data-sub="${sub.key}">${sub.name}</button>`;
+    html += `<button class="sub-btn ${currentSubcategory === sub.key ? 'active' : ''}" data-sub="${sub.key}">${sub.emoji} ${sub.name}</button>`;
   });
+  
   subcategoryBar.innerHTML = html;
   
   subcategoryBar.querySelectorAll('.sub-btn').forEach(btn => {
@@ -2026,6 +1902,7 @@ function renderSubcategories() {
   });
 }
 
+// Category filter
 categoryFilter.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     categoryFilter.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -2037,201 +1914,130 @@ categoryFilter.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-/* =============================================================
-   🛒 CART LOGIC
-   ============================================================= */
-
-const cartDrawer = document.getElementById('cartDrawer');
-const cartOverlay = document.getElementById('cartOverlay');
-const cartBody = document.getElementById('cartBody');
-const cartFooter = document.getElementById('cartFooter');
-const cartTotal = document.getElementById('cartTotal');
-const cartCountLabel = document.getElementById('cartCountLabel');
-const checkoutOverlay = document.getElementById('checkoutOverlay');
-const orderSummary = document.getElementById('orderSummary');
-
-function getTotalCount() {
-  return cart.reduce((s, item) => s + item.qty, 0);
+// ============ CART SYSTEM ============
+function getProductById(id) {
+  return productsData.find(p => p.id === id);
 }
 
-function getTotalPrice() {
-  return cart.reduce((s, item) => {
-    const p = productsData.find(pr => pr.id === item.id);
-    return s + (p ? p.price * item.qty : 0);
+function getCartCount() {
+  return cart.reduce((sum, item) => sum + item.qty, 0);
+}
+
+function getCartTotal() {
+  return cart.reduce((sum, item) => {
+    const p = getProductById(item.id);
+    return sum + (p ? p.price * item.qty : 0);
   }, 0);
 }
 
 function updateCartBadge() {
-  const count = getTotalCount();
-  cartBadge.textContent = count.toLocaleString('fa-IR');
+  cartBadge.textContent = getCartCount();
+}
+
+function addToCart(productId) {
+  const product = getProductById(productId);
+  if (!product) return;
+  
+  const existing = cart.find(item => item.id === productId);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id: productId, qty: 1 });
+  }
+  
+  updateCartBadge();
+  renderCartItems();
+  
   cartBadge.style.transform = 'scale(1.4)';
   setTimeout(() => { cartBadge.style.transform = 'scale(1)'; }, 300);
-  cartCountLabel.textContent = count.toLocaleString('fa-IR') + ' محصول';
-}
-
-function renderCart() {
-  updateCartBadge();
-
-  if (cart.length === 0) {
-    cartBody.innerHTML = `
-      <div class="cart-empty">
-        <div class="cart-empty-icon">
-          <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-        </div>
-        <h3>سبد خرید شما خالی است</h3>
-        <p>محصولات مورد علاقه خود را به سبد اضافه کنید</p>
-      </div>
-    `;
-    cartFooter.style.display = 'none';
-    return;
-  }
-
-  let html = '';
-  cart.forEach(item => {
-    const p = productsData.find(pr => pr.id === item.id);
-    if (!p) return;
-
-    const imgHTML = p.image
-      ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<div class=&quot;img-fallback-small&quot;>${p.name}</div>');">`
-      : `<div class="img-fallback-small">${p.name}</div>`;
-
-    html += `
-      <div class="cart-item">
-        <div class="cart-item-image">${imgHTML}</div>
-        <div class="cart-item-info">
-          <div class="cart-item-name">${p.name}</div>
-          <div class="cart-item-price">${formatPrice(p.price)}</div>
-          <div class="cart-item-actions">
-            <div class="qty-control">
-              <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
-              <span class="qty-value">${item.qty.toLocaleString('fa-IR')}</span>
-              <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
-            </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${p.id})">حذف</button>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-
-  cartBody.innerHTML = html;
-  cartFooter.style.display = 'block';
-  cartTotal.textContent = formatPrice(getTotalPrice());
-}
-
-function addToCart(event, productId) {
-  const product = productsData.find(p => p.id === productId);
-  if (!product) return;
-
-  const existing = cart.find(i => i.id === productId);
-  if (existing) existing.qty++;
-  else cart.push({ id: productId, qty: 1 });
-
-  renderCart();
+  
   showToast(`«${product.name}» به سبد اضافه شد`);
+}
 
-  if (event && event.currentTarget) {
-    const btn = event.currentTarget;
-    const originalText = btn.textContent;
-    btn.classList.add('added');
-    btn.textContent = '✓';
-    setTimeout(() => {
-      btn.classList.remove('added');
-      btn.textContent = originalText;
-    }, 900);
-  }
+function removeFromCart(productId) {
+  cart = cart.filter(item => item.id !== productId);
+  updateCartBadge();
+  renderCartItems();
 }
 
 function changeQty(productId, delta) {
   const item = cart.find(i => i.id === productId);
   if (!item) return;
   item.qty += delta;
-  if (item.qty <= 0) cart = cart.filter(i => i.id !== productId);
-  renderCart();
+  if (item.qty <= 0) {
+    removeFromCart(productId);
+  } else {
+    updateCartBadge();
+    renderCartItems();
+  }
 }
 
-function removeFromCart(productId) {
-  cart = cart.filter(i => i.id !== productId);
-  renderCart();
-  showToast('محصول از سبد حذف شد');
+function renderCartItems() {
+  if (cart.length === 0) {
+    cartItemsEl.innerHTML = `
+      <div class="cart-empty">
+        <span class="emoji">🛒</span>
+        <h4>سبد خرید شما خالی است</h4>
+        <p style="margin-top:0.5rem;font-size:0.85rem;">از منوی محصولات، آیتم موردنظر رو اضافه کن</p>
+      </div>
+    `;
+    cartTotalEl.textContent = '۰ تومان';
+    checkoutBtn.disabled = true;
+    return;
+  }
+  
+  checkoutBtn.disabled = false;
+  
+  cartItemsEl.innerHTML = cart.map(item => {
+    const p = getProductById(item.id);
+    if (!p) return '';
+    const imgHTML = (p.image && p.image.trim() !== '')
+      ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.parentNode.innerHTML='${p.emoji || '🍔'}';" />`
+      : (p.emoji || '🍔');
+    
+    return `
+      <div class="cart-item">
+        <div class="cart-item-img">${imgHTML}</div>
+        <div class="cart-item-info">
+          <h4>${p.name}</h4>
+          <div class="item-price">${formatPrice(p.price * item.qty)}</div>
+        </div>
+        <div class="cart-item-qty">
+          <button onclick="changeQty(${p.id}, 1)" aria-label="افزایش">+</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${p.id}, -1)" aria-label="کاهش">−</button>
+        </div>
+        <button class="cart-item-remove" onclick="removeFromCart(${p.id})" aria-label="حذف">🗑️</button>
+      </div>
+    `;
+  }).join('');
+  
+  cartTotalEl.textContent = formatPrice(getCartTotal());
 }
 
 function openCart() {
+  renderCartItems();
   cartDrawer.classList.add('open');
-  cartOverlay.classList.add('show');
-  document.body.classList.add('modal-open');
-  renderCart();
 }
-
 function closeCart() {
   cartDrawer.classList.remove('open');
-  cartOverlay.classList.remove('show');
-  document.body.classList.remove('modal-open');
 }
-
-/* =============================================================
-   📞 CHECKOUT
-   ============================================================= */
-
-function openCheckout() {
-  if (cart.length === 0) return;
-
-  let summaryHTML = `<div class="order-summary-title">خلاصه سفارش شما</div>`;
-  cart.forEach(item => {
-    const p = productsData.find(pr => pr.id === item.id);
-    if (!p) return;
-    summaryHTML += `
-      <div class="order-summary-row">
-        <span>${p.name} × ${item.qty.toLocaleString('fa-IR')}</span>
-        <span>${formatPrice(p.price * item.qty)}</span>
-      </div>
-    `;
-  });
-  summaryHTML += `
-    <div class="order-summary-row total">
-      <span>مبلغ نهایی</span>
-      <span class="amount">${formatPrice(getTotalPrice())}</span>
-    </div>
-  `;
-
-  orderSummary.innerHTML = summaryHTML;
-  checkoutOverlay.classList.add('show');
-  document.body.classList.add('modal-open');
-}
-
-function closeCheckout() {
-  checkoutOverlay.classList.remove('show');
-  document.body.classList.remove('modal-open');
-}
-
-/* =============================================================
-   🎯 EVENT LISTENERS
-   ============================================================= */
 
 document.getElementById('cartBtn').addEventListener('click', openCart);
-document.getElementById('cartClose').addEventListener('click', closeCart);
-cartOverlay.addEventListener('click', closeCart);
+cartClose.addEventListener('click', closeCart);
 
-document.getElementById('checkoutBtn').addEventListener('click', () => {
+checkoutBtn.addEventListener('click', () => {
+  if (cart.length === 0) return;
   closeCart();
-  setTimeout(openCheckout, 300);
-});
-document.getElementById('checkoutClose').addEventListener('click', closeCheckout);
-checkoutOverlay.addEventListener('click', (e) => {
-  if (e.target === checkoutOverlay) closeCheckout();
+  setTimeout(() => checkoutModal.classList.add('show'), 200);
 });
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (checkoutOverlay.classList.contains('show')) closeCheckout();
-    else if (cartDrawer.classList.contains('open')) closeCart();
-  }
+modalClose.addEventListener('click', () => checkoutModal.classList.remove('show'));
+checkoutModal.addEventListener('click', (e) => {
+  if (e.target === checkoutModal) checkoutModal.classList.remove('show');
 });
 
+// ============ TOAST ============
 function showToast(message) {
   toastText.textContent = message;
   toast.classList.add('show');
@@ -2241,19 +2047,34 @@ function showToast(message) {
   }, 2500);
 }
 
-/* =============================================================
-   🎨 HEADER + NAV + HERO FADE
-   ============================================================= */
-
+// ============ HEADER SCROLL + HERO PARALLAX ============
 const header = document.getElementById('header');
-const navLinks = document.querySelectorAll('.nav-links a');
+const heroBg = document.getElementById('heroBg');
 
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) header.classList.add('scrolled');
+  const y = window.scrollY;
+  
+  if (y > 50) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
+  
+  // افکت محو شدن و سایه روی هیرو
+  if (heroBg) {
+    const heroHeight = window.innerHeight;
+    if (y < heroHeight) {
+      const progress = Math.min(y / heroHeight, 1);
+      heroBg.style.opacity = String(1 - progress * 0.9);
+      heroBg.style.filter = `blur(${progress * 8}px) brightness(${1 - progress * 0.4})`;
+      heroBg.style.transform = `scale(${1 + progress * 0.08}) translateY(${progress * 40}px)`;
+    }
+  }
+}, { passive: true });
 
+// ============ NAV ACTIVE ============
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
   const sections = ['home', 'products', 'features', 'contact'];
   let current = 'home';
+  
   sections.forEach(id => {
     const section = document.getElementById(id);
     if (section) {
@@ -2261,92 +2082,53 @@ window.addEventListener('scroll', () => {
       if (rect.top <= 200) current = id;
     }
   });
+  
   navLinks.forEach(link => {
     link.classList.toggle('active', link.dataset.section === current);
   });
 });
 
-const heroBg = document.getElementById('heroBg');
-const heroOverlay = document.querySelector('.hero-overlay');
-const heroContent = document.querySelector('.hero-content');
-
-function updateHeroFade() {
-  if (!heroBg) return;
-  const vh = window.innerHeight;
-  const scrollY = window.scrollY;
-  const fadeEnd = vh * 0.85;
-  
-  let progress = scrollY / fadeEnd;
-  progress = Math.max(0, Math.min(1, progress));
-
-  const opacity = 1 - progress;
-  const scale = 1 + progress * 0.12;
-  
-  heroBg.style.opacity = opacity.toFixed(3);
-  heroBg.style.transform = `scale(${scale.toFixed(3)})`;
-  
-  if (heroOverlay) heroOverlay.style.opacity = opacity.toFixed(3);
-
-  if (heroContent) {
-    const contentOpacity = Math.max(0, 1 - progress * 1.4);
-    heroContent.style.opacity = contentOpacity.toFixed(3);
-    heroContent.style.transform = `translateY(${(progress * 30).toFixed(1)}px)`;
-  }
-}
-
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      updateHeroFade();
-      ticking = false;
-    });
-    ticking = true;
-  }
-}, { passive: true });
-window.addEventListener('resize', updateHeroFade);
-updateHeroFade();
-
-/* =============================================================
-   📱 MOBILE MENU
-   ============================================================= */
-
+// ============ MOBILE MENU ============
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
-const closeMenu = document.getElementById('closeMenu');
+const closeMenuBtn = document.getElementById('closeMenu');
 const overlay = document.getElementById('overlay');
 
-mobileMenuBtn.addEventListener('click', () => {
+function openMobileMenu() {
   mobileMenu.classList.add('open');
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
-});
-
+}
 function closeMobileMenu() {
   mobileMenu.classList.remove('open');
   overlay.classList.remove('show');
   document.body.style.overflow = '';
 }
 
-closeMenu.addEventListener('click', closeMobileMenu);
+mobileMenuBtn.addEventListener('click', openMobileMenu);
+closeMenuBtn.addEventListener('click', closeMobileMenu);
 overlay.addEventListener('click', closeMobileMenu);
-mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMobileMenu));
 
-/* =============================================================
-   🚀 INIT
-   ============================================================= */
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeMobileMenu);
+});
 
+// ============ INIT ============
 renderProducts();
 renderSubcategories();
-renderCart();
+updateCartBadge();
+renderCartItems();
 
+// ============ SMOOTH SCROLL ============
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const href = this.getAttribute('href');
     if (href === '#') return;
     e.preventDefault();
     const target = document.querySelector(href);
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
   });
 });
 </script>
