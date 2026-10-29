@@ -212,8 +212,25 @@ header.scrolled {
   place-items: center;
   overflow: hidden;
   background: var(--darker);
+  /* جدا شدن با سایه از بخش پایینی */
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  z-index: 2;
 }
 
+/* لایه گرادیان پایین هیرو برای محو شدن نرم به بخش بعدی */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(15,15,26,0.5) 50%, var(--light) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* لایه عکس پس‌زمینه فول */
 /* لایه عکس پس‌زمینه فول */
 .hero-bg {
   position: absolute;
@@ -223,10 +240,13 @@ header.scrolled {
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
+  transform-origin: center center;
   will-change: transform, opacity, filter;
   transition: none;
+  /* سایه داخلی پایین برای جدا شدن از بخش بعدی */
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
 }
-
 /* لایه تاریک برای خوانایی متن */
 .hero-overlay {
   position: absolute;
@@ -2048,6 +2068,7 @@ function showToast(message) {
 }
 
 // ============ HEADER SCROLL + HERO PARALLAX ============
+// ============ HEADER SCROLL + HERO PARALLAX ============
 const header = document.getElementById('header');
 const heroBg = document.getElementById('heroBg');
 
@@ -2057,18 +2078,22 @@ window.addEventListener('scroll', () => {
   if (y > 50) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
   
-  // افکت محو شدن و سایه روی هیرو
+  // افکت محو شدن + بزرگ‌تر شدن هم‌زمان عکس هیرو
   if (heroBg) {
     const heroHeight = window.innerHeight;
+    const progress = Math.min(y / heroHeight, 1); // 0 تا 1
+    
     if (y < heroHeight) {
-      const progress = Math.min(y / heroHeight, 1);
-      heroBg.style.opacity = String(1 - progress * 0.9);
-      heroBg.style.filter = `blur(${progress * 8}px) brightness(${1 - progress * 0.4})`;
-      heroBg.style.transform = `scale(${1 + progress * 0.08}) translateY(${progress * 40}px)`;
+      // هرچه اسکرول بیشتر → شفافیت کمتر + بزرگ‌تر شدن بیشتر + بلور بیشتر
+      heroBg.style.opacity = String(1 - progress * 0.95);
+      heroBg.style.transform = `scale(${1 + progress * 0.35}) translateY(${progress * 30}px)`;
+      heroBg.style.filter = `blur(${progress * 10}px) brightness(${1 - progress * 0.5})`;
+    } else {
+      // بعد از عبور از هیرو، کامل محو
+      heroBg.style.opacity = '0';
     }
   }
 }, { passive: true });
-
 // ============ NAV ACTIVE ============
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
