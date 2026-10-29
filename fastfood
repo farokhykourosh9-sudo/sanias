@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خونه‌برگر | فست‌فود خانگی</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #ff4757;
+  --primary-dark: #e63946;
+  --secondary: #ffa502;
+  --dark: #1a1a2e;
+  --darker: #0f0f1a;
+  --light: #f8f9fa;
+  --gray: #6c757d;
+  --card-bg: #ffffff;
+  --shadow: 0 10px 40px rgba(0,0,0,0.08);
+  --shadow-hover: 0 20px 60px rgba(255,71,87,0.25);
+  --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-smooth: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+body {
+  background: var(--light);
+  color: var(--dark);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ============ HEADER / NAV ============ */
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: var(--transition-smooth);
+}
+
+header.scrolled {
+  box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--dark);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.logo:hover { transform: scale(1.05); }
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(255,71,87,0.4);
+  animation: pulse 3s infinite;
+  flex-shrink: 0;
+}
+
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo-icon span {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 6px 20px rgba(255,71,87,0.4); }
+  50% { box-shadow: 0 6px 30px rgba(255,71,87,0.7); }
+}
+
+/* ---- NAVIGATION ---- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  background: rgba(0,0,0,0.03);
+  padding: 0.4rem;
+  border-radius: 50px;
+  position: relative;
+}
+
+.nav-links li a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.2rem;
+  text-decoration: none;
+  color: var(--gray);
+  font-weight: 600;
+  font-size: 0.92rem;
+  border-radius: 50px;
+  transition: var(--transition-smooth);
+  position: relative;
+  z-index: 2;
+}
+
+.nav-links li a:hover { color: var(--primary); }
+
+.nav-links li a.active {
+  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 4px 15px rgba(255,71,87,0.4);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.cart-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--dark), var(--darker));
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+}
+
+.cart-btn:hover { transform: scale(1.1) rotate(-8deg); }
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  background: var(--primary);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid white;
+}
+
+.order-btn {
+  padding: 0.75rem 1.6rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 6px 20px rgba(255,71,87,0.35);
+}
+
+.order-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255,71,87,0.5);
+}
+
+.mobile-menu-btn {
+  display: none;
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: var(--dark);
+  color: white;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+/* ============ HERO - FULL WIDTH IMAGE ============ */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* لایه عکس پس‌زمینه - تمام بخش بالا رو می‌گیره */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  will-change: opacity, transform;
+  transition: opacity 0.15s linear, transform 0.15s linear;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* اگه عکس نبود - پس‌زمینه گرادیانت جایگزین */
+.hero-bg-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff6b6b, #ffa502, #ff4757);
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* لایه تاریک روی عکس برای خوانایی متن */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.65) 100%);
+  z-index: 2;
+}
+
+.hero-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(255,71,87,0.2), transparent 60%);
+}
+
+/* محتوا وسط عکس */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+  text-align: center;
+  padding: 140px 2rem 80px;
+  color: white;
+  animation: heroFadeIn 1.2s ease;
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 1.8rem;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: #2ed573;
+  border-radius: 50%;
+  animation: blink 1.5s infinite;
+  box-shadow: 0 0 10px #2ed573;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, #ffd93d, #ffa502);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 20px rgba(255,165,2,0.5));
+}
+
+.hero p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255,255,255,0.92);
+  margin: 0 auto 2.5rem;
+  max-width: 650px;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 1rem 2.2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 10px 30px rgba(255,71,87,0.5);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(255,71,87,0.7);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.95);
+  color: var(--dark);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-4px);
+  background: white;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+/* آمار شیشه‌ای */
+.hero-stats {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 18px;
+  padding: 1.2rem 1.8rem;
+  min-width: 130px;
+  transition: var(--transition);
+}
+
+.stat-item:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-5px);
+}
+
+.stat-item h3 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd93d, #ffa502);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.2rem;
+}
+
+.stat-item p { 
+  font-size: 0.85rem; 
+  color: rgba(255,255,255,0.85); 
+}
+
+/* ============ SECTIONS ============ */
+.section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header .eyebrow {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.section-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.section-header p {
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+}
+
+/* ============ CATEGORY FILTER ============ */
+.category-filter {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.filter-btn {
+  padding: 0.8rem 1.8rem;
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--gray);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.filter-btn:hover {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 8px 25px rgba(255,71,87,0.4);
+}
+
+/* ============ PRODUCTS GRID - 2 ستون ============ */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* ✅ دو ستون در همه سایزها */
+  gap: 2rem;
+}
+
+.product-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.6s ease forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+}
+
+.product-image {
+  height: 280px;
+  background: linear-gradient(135deg, #fff5f6, #ffeedd);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.1);
+}
+
+.product-image .img-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #fff5f6, #ffeedd);
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 1rem;
+}
+
+.product-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.05), transparent 40%);
+  pointer-events: none;
+}
+
+.product-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--primary);
+  color: white;
+  padding: 0.4rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  z-index: 2;
+  box-shadow: 0 4px 15px rgba(255,71,87,0.4);
+}
+
+.product-badge.new { background: var(--secondary); }
+.product-badge.hot { background: var(--primary); }
+
+.product-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-category {
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.6rem;
+  color: var(--dark);
+}
+
+.product-desc {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.product-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-price .price {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--dark);
+}
+
+.product-price .old-price {
+  font-size: 0.8rem;
+  color: var(--gray);
+  text-decoration: line-through;
+}
+
+.add-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 20px rgba(255,71,87,0.35);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.add-btn:hover {
+  transform: scale(1.15) rotate(90deg);
+  box-shadow: 0 8px 25px rgba(255,71,87,0.6);
+}
+
+.add-btn:active { transform: scale(0.95) rotate(90deg); }
+
+/* ============ SUBCATEGORY TABS ============ */
+.subcategory-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+}
+
+.subcategory-bar.hidden { display: none; }
+
+.sub-btn {
+  padding: 0.6rem 1.3rem;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--gray);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.sub-btn:hover { color: var(--primary); background: rgba(255,71,87,0.05); }
+
+.sub-btn.active {
+  background: rgba(255,71,87,0.1);
+  color: var(--primary);
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
+/* ============ EMPTY STATE ============ */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--gray);
+  grid-column: 1 / -1;
+}
+
+.empty-state h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+}
+
+/* ============ FEATURES ============ */
+.features-section {
+  background: linear-gradient(135deg, var(--dark), var(--darker));
+  padding: 5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.features-section::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,71,87,0.15), transparent 70%);
+  border-radius: 50%;
+  top: -200px;
+  right: -200px;
+}
+
+.features-section .section-header h2 { color: white; }
+.features-section .section-header p { color: rgba(255,255,255,0.6); }
+
+.features-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.feature-card:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-8px);
+  border-color: rgba(255,71,87,0.5);
+}
+
+.feature-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1.2rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 900;
+  box-shadow: 0 10px 30px rgba(255,71,87,0.4);
+}
+
+.feature-card h3 {
+  color: white;
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+
+.feature-card p {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+}
+
+/* ============ CTA ============ */
+.cta-section {
+  max-width: 1200px;
+  margin: 5rem auto;
+  padding: 0 2rem;
+}
+
+.cta-box {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 30px;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(255,71,87,0.3);
+}
+
+.cta-box::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 30px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+}
+
+.cta-box h2 {
+  color: white;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  margin-bottom: 1rem;
+  font-weight: 900;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-box p {
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 2rem;
+  font-size: 1.05rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-box .btn-secondary {
+  background: white;
+  color: var(--primary);
+  position: relative;
+  z-index: 2;
+}
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--darker);
+  color: white;
+  padding: 4rem 2rem 2rem;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-brand .logo { color: white; margin-bottom: 1rem; }
+
+.footer-brand p {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.footer-col h4 {
+  font-size: 1.05rem;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+}
+
+.footer-col ul { list-style: none; }
+
+.footer-col ul li { margin-bottom: 0.7rem; }
+
+.footer-col ul li a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: var(--transition-smooth);
+}
+
+.footer-col ul li a:hover {
+  color: var(--primary);
+  padding-right: 5px;
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 2rem auto 0;
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+}
+
+/* ============ TOAST ============ */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--dark);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 600;
+  z-index: 2000;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast .toast-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #2ed573, #1e9e57);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .footer-container { grid-template-columns: 1fr 1fr; }
+  .product-image { height: 240px; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-menu-btn { display: grid; place-items: center; }
+  .order-btn { display: none; }
+  .nav-container { padding: 0.8rem 1rem; }
+  .hero-content { padding: 120px 1rem 60px; }
+  .section { padding: 3rem 1rem; }
+  .products-grid { 
+    grid-template-columns: repeat(2, 1fr);  /* هنوز ۲ ستون */
+    gap: 1rem; 
+  }
+  .product-image { height: 180px; }
+  .product-info { padding: 1rem; }
+  .product-title { font-size: 1rem; }
+  .product-desc { font-size: 0.8rem; }
+  .product-price .price { font-size: 1.05rem; }
+  .add-btn { width: 40px; height: 40px; font-size: 1.2rem; }
+  .footer-container { grid-template-columns: 1fr; gap: 2rem; }
+  .cta-box { padding: 3rem 1.5rem; }
+  .category-filter { gap: 0.5rem; }
+  .filter-btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
+  .hero-stats { gap: 1rem; }
+  .stat-item { padding: 1rem 1.4rem; min-width: 110px; }
+  .stat-item h3 { font-size: 1.4rem; }
+}
+
+@media (max-width: 480px) {
+  .products-grid { 
+    grid-template-columns: 1fr;  /* فقط در موبایل خیلی کوچک ۱ ستون */
+    gap: 1rem;
+  }
+  .product-image { height: 200px; }
+  .hero-buttons { flex-direction: column; width: 100%; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+}
+
+/* Mobile menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  max-width: 320px;
+  height: 100vh;
+  background: white;
+  z-index: 2000;
+  padding: 2rem;
+  transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+}
+
+.mobile-menu.open { right: 0; }
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.close-menu {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--light);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.mobile-menu ul { list-style: none; }
+
+.mobile-menu ul li a {
+  display: block;
+  padding: 1rem 0;
+  color: var(--dark);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1500;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-smooth);
+}
+
+.overlay.show { opacity: 1; visibility: visible; }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <nav class="nav-container">
+    <a href="#" class="logo">
+      <div class="logo-icon" id="logoIcon">
+        <img src="images/logo.png" alt="لوگو" onerror="this.style.display='none'; this.parentElement.innerHTML='<span>خ</span>';">
+      </div>
+      <span>خونه‌برگر</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#home" class="active" data-section="home">خانه</a></li>
+      <li><a href="#products" data-section="products">محصولات</a></li>
+      <li><a href="#features" data-section="features">ویژگی‌ها</a></li>
+      <li><a href="#contact" data-section="contact">تماس</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="cart-btn" id="cartBtn" aria-label="سبد خرید">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="order-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        سفارش آنلاین
+      </button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Menu -->
+<div class="overlay" id="overlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <a href="#" class="logo"><div class="logo-icon"><span>خ</span></div><span>خونه‌برگر</span></a>
+    <button class="close-menu" id="closeMenu">✕</button>
+  </div>
+  <ul>
+    <li><a href="#home">خانه</a></li>
+    <li><a href="#products">محصولات</a></li>
+    <li><a href="#features">ویژگی‌ها</a></li>
+    <li><a href="#contact">تماس</a></li>
+  </ul>
+</div>
+
+<!-- ============ HERO - FULL WIDTH ============ -->
+<section class="hero" id="home">
+  <!-- پس‌زمینه تمام‌عرض با قابلیت fade -->
+  <div class="hero-bg" id="heroBg">
+    <img src="images/hero.jpg" alt="غذای خانگی" 
+         onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<div class=&quot;hero-bg-fallback&quot;></div>');">
+  </div>
+  <div class="hero-overlay"></div>
+
+  <!-- محتوا روی عکس -->
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      تازه و خانگی، هر روز
+    </div>
+    <h1>
+      طعم <span class="gradient-text">خانگی</span><br>
+      با کیفیت <span class="gradient-text">رستورانی</span>
+    </h1>
+    <p>
+      سوسیس، کالباس، برگر و سس‌های کاملاً خانگی با بهترین مواد اولیه.
+      بدون مواد نگهدارنده، بدون رنگ مصنوعی، فقط طعم اصیل.
+    </p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        مشاهده محصولات
+      </button>
+      <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+        چرا ما؟
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <h3>+۵۰۰۰</h3>
+        <p>مشتری راضی</p>
+      </div>
+      <div class="stat-item">
+        <h3>+۵۰</h3>
+        <p>محصول متنوع</p>
+      </div>
+      <div class="stat-item">
+        <h3>۴.۹</h3>
+        <p>امتیاز مشتریان</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="section" id="products">
+  <div class="section-header">
+    <span class="eyebrow">منوی ما</span>
+    <h2>محصولات خوشمزه ما</h2>
+    <p>از بین دسته‌بندی‌های مختلف انتخاب کنید و طعم خانگی رو تجربه کنید</p>
+  </div>
+
+  <div class="category-filter" id="categoryFilter">
+    <button class="filter-btn active" data-category="all">همه</button>
+    <button class="filter-btn" data-category="sausage">سوسیس</button>
+    <button class="filter-btn" data-category="kabab">کالباس</button>
+    <button class="filter-btn" data-category="burger">برگر</button>
+    <button class="filter-btn" data-category="sauce">سس</button>
+  </div>
+
+  <div class="subcategory-bar hidden" id="subcategoryBar"></div>
+
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="features-section" id="features">
+  <div class="section-header">
+    <span class="eyebrow">چرا خونه‌برگر؟</span>
+    <h2>تفاوت رو حس کن</h2>
+    <p>ما با عشق و کیفیت، بهترین تجربه رو برات می‌سازیم</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">۱</div>
+      <h3>۱۰۰٪ طبیعی</h3>
+      <p>بدون مواد نگهدارنده و رنگ مصنوعی</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">۲</div>
+      <h3>دست‌ساز</h3>
+      <p>هر محصول با دقت و عشق تهیه می‌شه</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">۳</div>
+      <h3>ارسال سریع</h3>
+      <p>سفارش شما در کمترین زمان به دستتون می‌رسه</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">۴</div>
+      <h3>ضمانت کیفیت</h3>
+      <p>رضایت شما اولویت ماست</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>امروز چی می‌خوای بخوری؟</h2>
+    <p>همین حالا سفارشت رو ثبت کن و طعم خانگی رو تجربه کن</p>
+    <button class="btn-secondary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+      شروع سفارش
+    </button>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contact">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-icon"><span>خ</span></div>
+        <span>خونه‌برگر</span>
+      </a>
+      <p>فست‌فود خانگی با کیفیت رستورانی. سوسیس، کالباس، برگر و سس‌های دست‌ساز با بهترین مواد اولیه.</p>
+    </div>
+    <div class="footer-col">
+      <h4>دسته‌بندی‌ها</h4>
+      <ul>
+        <li><a href="#products">سوسیس</a></li>
+        <li><a href="#products">کالباس</a></li>
+        <li><a href="#products">برگر</a></li>
+        <li><a href="#products">سس</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>لینک‌های مفید</h4>
+      <ul>
+        <li><a href="#home">خانه</a></li>
+        <li><a href="#features">ویژگی‌ها</a></li>
+        <li><a href="#products">محصولات</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>تماس با ما</h4>
+      <ul>
+        <li><a href="#">۰۲۱-۱۲۳۴۵۶۷۸</a></li>
+        <li><a href="#">info@khoneburger.ir</a></li>
+        <li><a href="#">تهران، خیابان اصلی</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © ۱۴۰۳ خونه‌برگر | تمامی حقوق محفوظ است
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <div class="toast-icon">✓</div>
+  <span id="toastText">به سبد خرید اضافه شد</span>
+</div>
+
+<script>
+/* =============================================================
+   📦 DATA
+   ============================================================= */
+
+const subcategoriesData = {
+  sausage: [
+    { key: 'meat', name: 'گوشت قرمز' },
+    { key: 'chicken', name: 'مرغ' },
+    { key: 'special', name: 'ویژه' }
+  ],
+  kabab: [
+    { key: 'dry', name: 'خشک' },
+    { key: 'soft', name: 'نرم' },
+    { key: 'special', name: 'ویژه' }
+  ]
+};
+
+const productsData = [
+  // ----- سوسیس -----
+  { id: 1, name: 'سوسیس گوشت قرمز کوکتل', category: 'sausage', subcategory: 'meat', price: 85000, oldPrice: 98000, desc: 'سوسیس کوکتل با گوشت قرمز خالص، بدون مواد نگهدارنده', image: 'images/sausage-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
+  { id: 2, name: 'سوسیس مرغ ویژه', category: 'sausage', subcategory: 'chicken', price: 65000, oldPrice: null, desc: 'سوسیس مرغ خانگی با طعم بی‌نظیر و بافت نرم', image: 'images/sausage-2.jpg', badge: 'new', badgeText: 'جدید' },
+  { id: 3, name: 'سوسیس گوشت قرمز ویژه', category: 'sausage', subcategory: 'meat', price: 95000, oldPrice: 110000, desc: 'سوسیس ویژه با گوشت قرمز درجه یک و ادویه‌های مخصوص', image: 'images/sausage-3.jpg', badge: null, badgeText: null },
+  { id: 4, name: 'سوسیس مرغ پنیری', category: 'sausage', subcategory: 'chicken', price: 75000, oldPrice: null, desc: 'سوسیس مرغ با مغز پنیر، ترکیبی عالی برای صبحانه', image: 'images/sausage-4.jpg', badge: 'new', badgeText: 'جدید' },
+  { id: 5, name: 'سوسیس ویژه خانگی', category: 'sausage', subcategory: 'special', price: 120000, oldPrice: 140000, desc: 'سوسیس ویژه با ترکیب گوشت گوساله و مرغ', image: 'images/sausage-5.jpg', badge: 'hot', badgeText: 'ویژه' },
+  // ----- کالباس -----
+  { id: 6, name: 'کالباس خشک گوشت', category: 'kabab', subcategory: 'dry', price: 130000, oldPrice: 150000, desc: 'کالباس خشک با گوشت قرمز خالص، مناسب برای ساندویچ', image: 'images/kabab-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
+  { id: 7, name: 'کالباس نرم مرغ', category: 'kabab', subcategory: 'soft', price: 95000, oldPrice: null, desc: 'کالباس نرم مرغ با بافت لطیف و طعم خانگی', image: 'images/kabab-2.jpg', badge: null, badgeText: null },
+  { id: 8, name: 'کالباس خشک ویژه', category: 'kabab', subcategory: 'dry', price: 145000, oldPrice: 165000, desc: 'کالباس خشک ویژه با ادویه‌های مخصوص و دودی', image: 'images/kabab-3.jpg', badge: 'new', badgeText: 'جدید' },
+  { id: 9, name: 'کالباس نرم پنیری', category: 'kabab', subcategory: 'soft', price: 105000, oldPrice: null, desc: 'کالباس نرم با مغز پنیر و طعم بی‌نظیر', image: 'images/kabab-4.jpg', badge: null, badgeText: null },
+  { id: 10, name: 'کالباس ویژه خانگی', category: 'kabab', subcategory: 'special', price: 160000, oldPrice: 185000, desc: 'کالباس ویژه با ترکیب گوشت و مرغ درجه یک', image: 'images/kabab-5.jpg', badge: 'hot', badgeText: 'ویژه' },
+  // ----- برگر -----
+  { id: 11, name: 'برگر گوشت قرمز دست‌ساز', category: 'burger', subcategory: null, price: 110000, oldPrice: 130000, desc: 'برگر دست‌ساز با گوشت قرمز چرخ‌شده تازه', image: 'images/burger-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
+  { id: 12, name: 'برگر مرغ خانگی', category: 'burger', subcategory: null, price: 90000, oldPrice: null, desc: 'برگر مرغ با سینه مرغ تازه و ادویه‌های مخصوص', image: 'images/burger-2.jpg', badge: null, badgeText: null },
+  { id: 13, name: 'برگر ویژه دوگانه', category: 'burger', subcategory: null, price: 150000, oldPrice: 175000, desc: 'برگر ویژه با دو لایه گوشت و پنیر گودا', image: 'images/burger-3.jpg', badge: 'new', badgeText: 'جدید' },
+  { id: 14, name: 'برگر گیاهی', category: 'burger', subcategory: null, price: 85000, oldPrice: null, desc: 'برگر گیاهی با پروتئین سویا و سبزیجات تازه', image: 'images/burger-4.jpg', badge: null, badgeText: null },
+  // ----- سس -----
+  { id: 15, name: 'سس مایونز خانگی', category: 'sauce', subcategory: null, price: 45000, oldPrice: 55000, desc: 'سس مایونز خانگی با تخم‌مرغ تازه و روغن سالم', image: 'images/sauce-1.jpg', badge: 'hot', badgeText: 'پرفروش' },
+  { id: 16, name: 'سس کچاپ طبیعی', category: 'sauce', subcategory: null, price: 40000, oldPrice: null, desc: 'سس کچاپ با گوجه‌فرنگی تازه و بدون مواد نگهدارنده', image: 'images/sauce-2.jpg', badge: null, badgeText: null },
+  { id: 17, name: 'سس مخصوص برگر', category: 'sauce', subcategory: null, price: 55000, oldPrice: 65000, desc: 'سس مخصوص برگر با ترکیب ادویه‌های ویژه', image: 'images/sauce-3.jpg', badge: 'new', badgeText: 'جدید' },
+  { id: 18, name: 'سس سیر خانگی', category: 'sauce', subcategory: null, price: 48000, oldPrice: null, desc: 'سس سیر تازه با طعم قوی و بی‌نظیر', image: 'images/sauce-4.jpg', badge: null, badgeText: null }
+];
+
+/* =============================================================
+   ⚙️ LOGIC
+   ============================================================= */
+
+let currentCategory = 'all';
+let currentSubcategory = 'all';
+let cartCount = 0;
+
+const productsGrid = document.getElementById('productsGrid');
+const categoryFilter = document.getElementById('categoryFilter');
+const subcategoryBar = document.getElementById('subcategoryBar');
+const cartBadge = document.getElementById('cartBadge');
+const toast = document.getElementById('toast');
+const toastText = document.getElementById('toastText');
+
+function formatPrice(price) {
+  return price.toLocaleString('fa-IR') + ' تومان';
+}
+
+function imageFallbackHTML(productName) {
+  return `<div class="img-fallback">عکس: ${productName}</div>`;
+}
+
+function createProductCard(product, index) {
+  const badgeHTML = product.badge 
+    ? `<div class="product-badge ${product.badge}">${product.badgeText || ''}</div>` 
+    : '';
+  
+  const oldPriceHTML = product.oldPrice 
+    ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>` 
+    : '';
+  
+  const categoryNames = {
+    sausage: 'سوسیس',
+    kabab: 'کالباس',
+    burger: 'برگر',
+    sauce: 'سس'
+  };
+  
+  let subcategoryName = '';
+  if (product.subcategory && subcategoriesData[product.category]) {
+    const sub = subcategoriesData[product.category].find(s => s.key === product.subcategory);
+    if (sub) subcategoryName = ` • ${sub.name}`;
+  }
+
+  const imageHTML = product.image
+    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" 
+         onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '${imageFallbackHTML(product.name).replace(/'/g, "\\'")}');">`
+    : imageFallbackHTML(product.name);
+
+  return `
+    <div class="product-card" style="animation-delay: ${index * 0.08}s" data-id="${product.id}">
+      ${badgeHTML}
+      <div class="product-image">${imageHTML}</div>
+      <div class="product-info">
+        <div class="product-category">${categoryNames[product.category]}${subcategoryName}</div>
+        <h3 class="product-title">${product.name}</h3>
+        <p class="product-desc">${product.desc}</p>
+        <div class="product-footer">
+          <div class="product-price">
+            ${oldPriceHTML}
+            <span class="price">${formatPrice(product.price)}</span>
+          </div>
+          <button class="add-btn" onclick="addToCart(${product.id})" aria-label="افزودن به سبد">+</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProducts() {
+  let filtered = productsData;
+  
+  if (currentCategory !== 'all') {
+    filtered = filtered.filter(p => p.category === currentCategory);
+  }
+  
+  if (currentSubcategory !== 'all') {
+    filtered = filtered.filter(p => p.subcategory === currentSubcategory);
+  }
+  
+  if (filtered.length === 0) {
+    productsGrid.innerHTML = `
+      <div class="empty-state">
+        <h3>محصولی یافت نشد</h3>
+        <p>لطفاً دسته‌بندی دیگری را انتخاب کنید</p>
+      </div>
+    `;
+    return;
+  }
+  
+  productsGrid.innerHTML = filtered.map((p, i) => createProductCard(p, i)).join('');
+}
+
+function renderSubcategories() {
+  if (currentCategory === 'all' || !subcategoriesData[currentCategory]) {
+    subcategoryBar.classList.add('hidden');
+    subcategoryBar.innerHTML = '';
+    return;
+  }
+  
+  const subs = subcategoriesData[currentCategory];
+  if (!subs || subs.length === 0) {
+    subcategoryBar.classList.add('hidden');
+    return;
+  }
+  
+  subcategoryBar.classList.remove('hidden');
+  
+  let html = `<button class="sub-btn ${currentSubcategory === 'all' ? 'active' : ''}" data-sub="all">همه</button>`;
+  subs.forEach(sub => {
+    html += `<button class="sub-btn ${currentSubcategory === sub.key ? 'active' : ''}" data-sub="${sub.key}">${sub.name}</button>`;
+  });
+  
+  subcategoryBar.innerHTML = html;
+  
+  subcategoryBar.querySelectorAll('.sub-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSubcategory = btn.dataset.sub;
+      renderSubcategories();
+      renderProducts();
+    });
+  });
+}
+
+categoryFilter.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    categoryFilter.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCategory = btn.dataset.category;
+    currentSubcategory = 'all';
+    renderSubcategories();
+    renderProducts();
+  });
+});
+
+function addToCart(productId) {
+  const product = productsData.find(p => p.id === productId);
+  if (!product) return;
+  
+  cartCount++;
+  cartBadge.textContent = cartCount;
+  
+  cartBadge.style.transform = 'scale(1.4)';
+  setTimeout(() => { cartBadge.style.transform = 'scale(1)'; }, 300);
+  
+  showToast(`«${product.name}» به سبد اضافه شد`);
+}
+
+function showToast(message) {
+  toastText.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2500);
+}
+
+document.getElementById('cartBtn').addEventListener('click', () => {
+  if (cartCount === 0) {
+    showToast('سبد خرید شما خالی است');
+  } else {
+    showToast(`شما ${cartCount} محصول در سبد دارید`);
+  }
+});
+
+// ============ HEADER SCROLL ============
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// ============ NAV ACTIVE ============
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  const sections = ['home', 'products', 'features', 'contact'];
+  let current = 'home';
+  
+  sections.forEach(id => {
+    const section = document.getElementById(id);
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 200) current = id;
+    }
+  });
+  
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.section === current);
+  });
+});
+
+/* =============================================================
+   ✨ FADE ON SCROLL - پس‌زمینه hero تمام‌عرض محو می‌شه
+   ============================================================= */
+const heroBg = document.getElementById('heroBg');
+
+function updateHeroFade() {
+  if (!heroBg) return;
+  
+  const vh = window.innerHeight;
+  const scrollY = window.scrollY;
+  
+  const fadeStart = 0;
+  const fadeEnd = vh * 0.85;
+  
+  let progress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+  progress = Math.max(0, Math.min(1, progress));
+  
+  // محو شدن
+  const opacity = 1 - progress;
+  // بزرگ شدن ملایم (zoom-out feel)
+  const scale = 1 + progress * 0.15;
+  
+  heroBg.style.opacity = opacity.toFixed(3);
+  heroBg.style.transform = `scale(${scale.toFixed(3)})`;
+}
+
+let ticking = false;
+function onScrollHeroFade() {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      updateHeroFade();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}
+
+window.addEventListener('scroll', onScrollHeroFade, { passive: true });
+window.addEventListener('resize', updateHeroFade);
+updateHeroFade();
+
+// ============ MOBILE MENU ============
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeMenu = document.getElementById('closeMenu');
+const overlay = document.getElementById('overlay');
+
+function openMobileMenu() {
+  mobileMenu.classList.add('open');
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+mobileMenuBtn.addEventListener('click', openMobileMenu);
+closeMenu.addEventListener('click', closeMobileMenu);
+overlay.addEventListener('click', closeMobileMenu);
+
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeMobileMenu);
+});
+
+// ============ INIT ============
+renderProducts();
+renderSubcategories();
+
+// ============ SMOOTH SCROLL ============
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href === '#') return;
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
