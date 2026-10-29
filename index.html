@@ -212,25 +212,12 @@ header.scrolled {
   place-items: center;
   overflow: hidden;
   background: var(--darker);
-  /* جدا شدن با سایه از بخش پایینی */
-  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  /* سایه واقعی از لبه پایین هیرو روی بخش بعدی */
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.55);
   z-index: 2;
+  isolation: isolate;
 }
 
-/* لایه گرادیان پایین هیرو برای محو شدن نرم به بخش بعدی */
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, transparent 0%, rgba(15,15,26,0.5) 50%, var(--light) 100%);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* لایه عکس پس‌زمینه فول */
 /* لایه عکس پس‌زمینه فول */
 .hero-bg {
   position: absolute;
@@ -243,15 +230,13 @@ header.scrolled {
   transform-origin: center center;
   will-change: transform, opacity, filter;
   transition: none;
-  /* سایه داخلی پایین برای جدا شدن از بخش بعدی */
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
 }
+
 /* لایه تاریک برای خوانایی متن */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15,15,26,0.55) 0%, rgba(15,15,26,0.75) 60%, rgba(15,15,26,0.95) 100%);
+  background: linear-gradient(180deg, rgba(15,15,26,0.55) 0%, rgba(15,15,26,0.75) 60%, rgba(15,15,26,0.92) 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -1511,9 +1496,9 @@ footer {
    ⚙️ تنظیمات تماس - اینجا آیدی‌ها رو عوض کن
    ============================================================= */
 const CONTACT_INFO = {
-  telegram: 'yourusername',      // بدون @
-  instagram: 'yourusername',     // بدون @
-  phone: '+982112345678'         // با کد کشور
+  telegram: 'yourusername',
+  instagram: 'yourusername',
+  phone: '+982112345678'
 };
 
 /* =============================================================
@@ -1534,12 +1519,8 @@ const subcategoriesData = {
 
 /* =============================================================
    🛍️ محصولات
-   -------------------------------------------------------------
-   🔴 فیلد image: لینک عکس محصول رو اینجا بذار.
-   اگر خالی باشه، ایموجی نمایش داده می‌شه.
    ============================================================= */
 const productsData = [
-  // ----- سوسیس -----
   {
     id: 1,
     name: 'سوسیس گوشت قرمز کوکتل',
@@ -1549,7 +1530,7 @@ const productsData = [
     oldPrice: 98000,
     desc: 'سوسیس کوکتل با گوشت قرمز خالص، بدون مواد نگهدارنده',
     emoji: '🌭',
-    image: '', // ← لینک عکس رو اینجا بذار
+    image: '',
     badge: 'hot',
     badgeText: 'پرفروش'
   },
@@ -1605,8 +1586,6 @@ const productsData = [
     badge: 'hot',
     badgeText: 'ویژه'
   },
-
-  // ----- کالباس -----
   {
     id: 6,
     name: 'کالباس خشک گوشت',
@@ -1672,8 +1651,6 @@ const productsData = [
     badge: 'hot',
     badgeText: 'ویژه'
   },
-
-  // ----- برگر -----
   {
     id: 11,
     name: 'برگر گوشت قرمز دست‌ساز',
@@ -1726,8 +1703,6 @@ const productsData = [
     badge: null,
     badgeText: null
   },
-
-  // ----- سس -----
   {
     id: 15,
     name: 'سس مایونز خانگی',
@@ -1787,9 +1762,8 @@ const productsData = [
    ============================================================= */
 let currentCategory = 'all';
 let currentSubcategory = 'all';
-let cart = []; // [{ id, qty }]
+let cart = [];
 
-// DOM
 const productsGrid = document.getElementById('productsGrid');
 const categoryFilter = document.getElementById('categoryFilter');
 const subcategoryBar = document.getElementById('subcategoryBar');
@@ -1797,23 +1771,19 @@ const cartBadge = document.getElementById('cartBadge');
 const toast = document.getElementById('toast');
 const toastText = document.getElementById('toastText');
 
-// Cart drawer elements
 const cartDrawer = document.getElementById('cartDrawer');
 const cartClose = document.getElementById('cartClose');
 const cartItemsEl = document.getElementById('cartItems');
 const cartTotalEl = document.getElementById('cartTotal');
 const checkoutBtn = document.getElementById('checkoutBtn');
 
-// Checkout modal
 const checkoutModal = document.getElementById('checkoutModal');
 const modalClose = document.getElementById('modalClose');
 
-// 🎨 فرمت قیمت
 function formatPrice(price) {
   return price.toLocaleString('fa-IR') + ' تومان';
 }
 
-// 🖼️ رندر تصویر محصول
 function renderProductImage(product) {
   if (product.image && product.image.trim() !== '') {
     return `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.style.display='none';this.parentNode.innerHTML='${product.emoji || '🍔'}';" />`;
@@ -1821,7 +1791,6 @@ function renderProductImage(product) {
   return product.emoji || '🍔';
 }
 
-// 🖼️ ساخت کارت محصول
 function createProductCard(product, index) {
   const badgeHTML = product.badge 
     ? `<div class="product-badge ${product.badge}">${product.badgeText || ''}</div>` 
@@ -1864,7 +1833,6 @@ function createProductCard(product, index) {
   `;
 }
 
-// 🔄 رندر محصولات
 function renderProducts() {
   let filtered = productsData;
   
@@ -1890,7 +1858,6 @@ function renderProducts() {
   productsGrid.innerHTML = filtered.map((p, i) => createProductCard(p, i)).join('');
 }
 
-// 🔄 رندر نوار زیرمجموعه
 function renderSubcategories() {
   if (currentCategory === 'all' || !subcategoriesData[currentCategory]) {
     subcategoryBar.classList.add('hidden');
@@ -1922,7 +1889,6 @@ function renderSubcategories() {
   });
 }
 
-// Category filter
 categoryFilter.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     categoryFilter.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1934,7 +1900,6 @@ categoryFilter.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-// ============ CART SYSTEM ============
 function getProductById(id) {
   return productsData.find(p => p.id === id);
 }
@@ -2057,7 +2022,6 @@ checkoutModal.addEventListener('click', (e) => {
   if (e.target === checkoutModal) checkoutModal.classList.remove('show');
 });
 
-// ============ TOAST ============
 function showToast(message) {
   toastText.textContent = message;
   toast.classList.add('show');
@@ -2068,9 +2032,9 @@ function showToast(message) {
 }
 
 // ============ HEADER SCROLL + HERO PARALLAX ============
-// ============ HEADER SCROLL + HERO PARALLAX ============
 const header = document.getElementById('header');
 const heroBg = document.getElementById('heroBg');
+const heroSection = document.querySelector('.hero');
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
@@ -2081,19 +2045,28 @@ window.addEventListener('scroll', () => {
   // افکت محو شدن + بزرگ‌تر شدن هم‌زمان عکس هیرو
   if (heroBg) {
     const heroHeight = window.innerHeight;
-    const progress = Math.min(y / heroHeight, 1); // 0 تا 1
+    const progress = Math.min(y / heroHeight, 1);
     
     if (y < heroHeight) {
-      // هرچه اسکرول بیشتر → شفافیت کمتر + بزرگ‌تر شدن بیشتر + بلور بیشتر
-      heroBg.style.opacity = String(1 - progress * 0.95);
-      heroBg.style.transform = `scale(${1 + progress * 0.35}) translateY(${progress * 30}px)`;
-      heroBg.style.filter = `blur(${progress * 10}px) brightness(${1 - progress * 0.5})`;
+      heroBg.style.opacity = String(1 - progress * 0.85);
+      heroBg.style.transform = `scale(${1 + progress * 0.4})`;
+      heroBg.style.filter = `blur(${progress * 6}px) brightness(${1 - progress * 0.35})`;
     } else {
-      // بعد از عبور از هیرو، کامل محو
       heroBg.style.opacity = '0';
     }
   }
+  
+  // سایه پایین هیرو قوی‌تر می‌شه وقتی ازش رد می‌شیم
+  if (heroSection) {
+    const heroHeight = window.innerHeight;
+    const progress = Math.min(y / heroHeight, 1);
+    const shadowY = 40 + progress * 40;
+    const shadowBlur = 80 + progress * 40;
+    const shadowAlpha = 0.55 + progress * 0.2;
+    heroSection.style.boxShadow = `0 ${shadowY}px ${shadowBlur}px -20px rgba(0,0,0,${shadowAlpha})`;
+  }
 }, { passive: true });
+
 // ============ NAV ACTIVE ============
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
